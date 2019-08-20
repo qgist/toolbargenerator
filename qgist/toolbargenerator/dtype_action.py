@@ -82,9 +82,9 @@ class dtype_toolbar_action:
             if name_count != 1:
                 self._action, self._present = None, False
                 if name_count == 0:
-                    raise QgistActionNotFoundError(translate('global', 'Action could not be found. (dtype_action find)'))
+                    raise QgistActionNotFoundError('"{NAME:s}": '.format(NAME = str(name)) + translate('global', 'Action could not be found. (dtype_action find)'))
                 else:
-                    raise QgistActionConfusionError(translate('global', 'Confused, multiple matching actions. (dtype_action find)'))
+                    raise QgistActionConfusionError('"{NAME:s}": '.format(NAME = str(name)) + translate('global', 'Confused, multiple matching actions. (dtype_action find)'))
             else:
                 self._action, self._present = temp_dict[name], True
                 raise QgistActionFound()
@@ -108,7 +108,7 @@ class dtype_toolbar_action:
 
         if self._name_translated == '':
             self._action, self._present = None, False
-            raise QgistActionNotFoundError(translate('global', 'Action could not be found. (dtype_action  find)'))
+            raise QgistActionNotFoundError('"{NAME:s}": '.format(NAME = self._name_translated) + translate('global', 'Action could not be found. (dtype_action  find)'))
 
         try:
             search_by(
