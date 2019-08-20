@@ -93,17 +93,20 @@ class dtype_toolbar_class:
 
         self._toolbar = iface.addToolBar(self._name_translated)
         self._toolbar.setObjectName(self._name_internal)
-
-        mainwindow = iface.mainWindow()
-        all_actions = dtype_action_class.get_all_actions(mainwindow)
-        for action in self._actions_list:
-            try:
-                action.find(all_actions)
-                self._toolbar.addAction(action.action)
-            except (QgistActionConfusionError, QgistActionNotFoundError) as e:
-                msg_warning(e, mainwindow)
+        self._toolbar_fill(iface)
 
         self._loaded = True
+
+    def reload(self, iface):
+
+        if not isinstance(iface, QgisInterface):
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar)'))
+
+        if not self._loaded:
+            return
+
+        self._toolbar_clear()
+        self._toolbar_clear(iface)
 
     def unload(self, iface):
 
@@ -120,6 +123,21 @@ class dtype_toolbar_class:
         self._toolbar = None
 
         self._loaded = False
+
+    def _toolbar_clear(self):
+
+        self._toolbar.clear()
+
+    def _toolbar_fill(self, iface):
+
+        mainwindow = iface.mainWindow()
+        all_actions = dtype_action_class.get_all_actions(mainwindow)
+        for action in self._actions_list:
+            try:
+                action.find(all_actions)
+                self._toolbar.addAction(action.action)
+            except (QgistActionConfusionError, QgistActionNotFoundError) as e:
+                msg_warning(e, mainwindow)
 
     def as_dict(self):
 
