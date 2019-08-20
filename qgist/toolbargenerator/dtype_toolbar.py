@@ -35,11 +35,16 @@ from qgis._gui import QgisInterface
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+from .error import (
+    QgistActionConfusionError,
+    QgistActionNotFoundError,
+    )
 from .dtype_action import dtype_action_class
 from ..error import (
     QgistTypeError,
     QgistValueError,
     )
+from ..msg import msg_warning
 from ..util import translate
 
 
@@ -74,6 +79,7 @@ class dtype_toolbar_class:
         self._enabled = enabled
 
         self._loaded = False
+        self._toolbar = None
         if self._enabled:
             self.load(iface)
 
@@ -85,7 +91,17 @@ class dtype_toolbar_class:
         if self._loaded:
             return
 
-        # TODO
+        self._toolbar = iface.addToolBar(self._name_translated)
+        self._toolbar.setObjectName(self._name_internal)
+
+        mainwindow = iface.mainWindow()
+        all_actions = dtype_action_class.get_all_actions(mainwindow)
+        for action in self._actions_list:
+            try:
+                action.find(all_actions)
+                self._toolbar.addAction(action.action)
+            except (QgistActionConfusionError, QgistActionNotFoundError) as e:
+                msg_warning(e, mainwindow)
 
         self._loaded = True
 

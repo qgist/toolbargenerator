@@ -129,6 +129,16 @@ class dtype_toolbar_action:
             return
 
     @property
+    def action(self):
+
+        return self._name_internal
+
+    @action.setter
+    def action(self, value):
+
+        raise QgistAttributeError(translate('global', '"action" must not be changed. (dtype_action action)'))
+
+    @property
     def name_internal(self):
 
         return self._name_internal
