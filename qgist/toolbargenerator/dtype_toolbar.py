@@ -54,7 +54,7 @@ from ..util import translate
 
 class dtype_toolbar_class:
 
-    def __init__(self, iface, name_internal, name_translated, actions_list, enabled, iface):
+    def __init__(self, name_internal, name_translated, actions_list, enabled, iface):
 
         if not isinstance(name_internal, str):
             raise QgistTypeError(translate('global', '"name_internal" must be str. (dtype_toolbar)'))

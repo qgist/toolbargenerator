@@ -146,7 +146,7 @@ class toolbargenerator:
             config = config_class(os.path.join(get_config_path(), CONFIG_FN))
             self._fsm = dtype_fsm_class(
                 toolbar_list = config.get('toolbar_list', list()),
-                mainwindow = self._mainwindow,
+                iface = self._iface,
                 config = config,
                 )
         except Qgist_ALL_Errors as e:

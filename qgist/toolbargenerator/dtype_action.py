@@ -55,7 +55,7 @@ from ..util import translate
 # CLASS
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-class dtype_toolbar_action:
+class dtype_action_class:
 
     def __init__(self, name_internal, name_translated, parent_name_internal):
 
