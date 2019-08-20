@@ -128,6 +128,13 @@ class dtype_toolbar_action:
         except QgistActionFound:
             return
 
+    def disconnect(self):
+
+        if not self._present:
+            return
+
+        self._action, self._present = None, False
+
     @property
     def action(self):
 

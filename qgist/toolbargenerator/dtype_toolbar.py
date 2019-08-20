@@ -113,7 +113,11 @@ class dtype_toolbar_class:
         if not self._loaded:
             return
 
-        # TODO
+        for action in self._actions_list:
+            action.disconnect()
+
+        del self._toolbar # explicit ...
+        self._toolbar = None
 
         self._loaded = False
 
