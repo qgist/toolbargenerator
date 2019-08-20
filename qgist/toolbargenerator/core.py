@@ -25,6 +25,52 @@ specific language governing rights and limitations under the License.
 """
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# IMPORT (Python Standard Library)
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+import os
+import platform
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# IMPORT (External Dependencies)
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+from PyQt5.QtGui import (
+    QIcon,
+    )
+from PyQt5.QtWidgets import (
+    QAction,
+    )
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# IMPORT (Internal)
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+from .dtype_fsm import dtype_fsm_class
+from .ui_manager import ui_manager_class
+from ..config import (
+    config_class,
+    get_config_path,
+    )
+from ..const import (
+    ICON_FLD,
+    TRANSLATION_FLD,
+    )
+from ..error import (
+    Qgist_ALL_Errors,
+    QgistTypeError,
+    QgistValueError,
+    )
+from ..msg import msg_critical
+from ..util import (
+    translate,
+    setupTranslation,
+    )
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # CLASS: TOOLBARGENERATOR CORE
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -32,4 +78,17 @@ class toolbargenerator:
 
     def __init__(self, iface, plugin_root_fld):
 
-        pass
+        if not hasattr(iface, 'mainWindow'):
+            raise QgistTypeError(translate('global', '"iface" must be a QGIS iface object. (toolbargenerator)'))
+        if not isinstance(plugin_root_fld, str):
+            raise QgistTypeError(translate('global', '"plugin_root_fld" must be str. (toolbargenerator)'))
+        if not os.path.exists(plugin_root_fld):
+            raise QgistValueError(translate('global', '"plugin_root_fld" must exists. (toolbargenerator)'))
+        if not os.path.isdir(plugin_root_fld):
+            raise QgistValueError(translate('global', '"plugin_root_fld" must be a directory. (toolbargenerator)'))
+
+        self._iface = iface
+        self._plugin_root_fld = plugin_root_fld
+
+        self._mainwindow = self._iface.mainWindow()
+        self._system = platform.system()
