@@ -153,7 +153,8 @@ class toolbargenerator:
             msg_critical(e, self._mainwindow)
             return
 
-        # TODO
+        self._ui_dict['action_manage'].triggered.connect(self._open_manager)
+        self._ui_dict['action_manage'].setEnabled(True)
 
     def _open_manager(self):
 
