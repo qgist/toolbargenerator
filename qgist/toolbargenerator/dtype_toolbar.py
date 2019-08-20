@@ -25,10 +25,22 @@ specific language governing rights and limitations under the License.
 """
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# IMPORT (QGIS)
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+from qgis._gui import QgisInterface
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 from .dtype_action import dtype_action_class
+from ..error import (
+    QgistTypeError,
+    QgistValueError,
+    )
+from ..util import translate
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -37,11 +49,28 @@ from .dtype_action import dtype_action_class
 
 class dtype_toolbar_class:
 
-    def __init__(self, iface, name_internal, name_translated, actions_list, enabled):
+    def __init__(self, iface, name_internal, name_translated, actions_list, enabled, iface):
+
+        if not isinstance(name_internal, str):
+            raise QgistTypeError(translate('global', '"name_internal" must be str. (dtype_toolbar)'))
+        if len(name_internal) == 0:
+            raise QgistValueError(translate('global', '"name_internal" must not be empty. (dtype_toolbar)'))
+        if not isinstance(name_translated, str):
+            raise QgistTypeError(translate('global', '"name_translated" must be str. (dtype_toolbar)'))
+        if len(name_translated) == 0:
+            raise QgistValueError(translate('global', '"name_translated" must not be empty. (dtype_toolbar)'))
+        if not isinstance(actions_list, list):
+            raise QgistTypeError(translate('global', '"actions_list" must be a list. (dtype_toolbar)'))
+        if not all([isinstance(item, dict) for item in actions_list]):
+            raise QgistTypeError(translate('global', 'Items in "actions_list" must be dicts. (dtype_toolbar)'))
+        if not isinstance(enabled, bool):
+            raise QgistTypeError(translate('global', '"enabled" must be bool. (dtype_toolbar)'))
+        if not isinstance(iface, QgisInterface):
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar)'))
 
         self._name_internal = name_internal
         self._name_translated = name_translated
-        self._actions_list = actions_list # TODO
+        self._actions_list = [dtype_action_class(**item) for item in actions_list]
         self._enabled = enabled
 
         self._loaded = False
@@ -49,6 +78,9 @@ class dtype_toolbar_class:
             self.load(iface)
 
     def load(self, iface):
+
+        if not isinstance(iface, QgisInterface):
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar)'))
 
         if self._loaded:
             return
@@ -58,6 +90,9 @@ class dtype_toolbar_class:
         self._loaded = True
 
     def unload(self, iface):
+
+        if not isinstance(iface, QgisInterface):
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar)'))
 
         if not self._loaded:
             return
@@ -71,6 +106,6 @@ class dtype_toolbar_class:
         return dict(
             name_internal = self._name_internal,
             name_translated = self._name_translated,
-            actions_list = None, # TODO
+            actions_list = [item.as_dict() for item in self._actions_list],
             enabled = self._enabled,
             )
