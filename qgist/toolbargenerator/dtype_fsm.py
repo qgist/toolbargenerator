@@ -67,7 +67,7 @@ class dtype_fsm_class:
         self._config = config
 
         self._toolbar_dict = {
-            item['name']: dtype_toolbar_class(mainwindow = mainwindow, **item)
+            item['name_internal']: dtype_toolbar_class(mainwindow = mainwindow, **item)
             for item in toolbar_list
             }
         self.keys = self._toolbar_dict.keys
