@@ -28,5 +28,5 @@ specific language governing rights and limitations under the License.
 # CONST
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-CONFIG_FN = 'workbench.json'
+CONFIG_FN = 'toolbargenerator.json'
 PLUGIN_ICON_FN = 'toolbargenerator.svg'
