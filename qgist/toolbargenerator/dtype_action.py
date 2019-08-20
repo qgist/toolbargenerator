@@ -44,7 +44,10 @@ from .error import (
     QgistActionNotFoundError,
     QgistUnnamedActionError,
     )
-from ..error import QgistTypeError
+from ..error import (
+    QgistAttributeError,
+    QgistTypeError,
+    )
 from ..util import translate
 
 
@@ -100,6 +103,7 @@ class dtype_toolbar_action:
             except QgistActionNotFoundError:
                 pass
             except QgistActionFound:
+                self._name_translated = str(self._action.text())
                 return
 
         if self._name_translated == '':
@@ -123,6 +127,36 @@ class dtype_toolbar_action:
                 )
         except QgistActionFound:
             return
+
+    @property
+    def name_internal(self):
+
+        return self._name_internal
+
+    @name_internal.setter
+    def name_internal(self, value):
+
+        raise QgistAttributeError(translate('global', '"name_internal" must not be changed. (dtype_action name_internal)'))
+
+    @property
+    def name_translated(self):
+
+        return self._name_translated
+
+    @name_translated.setter
+    def name_translated(self, value):
+
+        raise QgistAttributeError(translate('global', '"name_translated" must not be changed. (dtype_action name_translated)'))
+
+    @property
+    def parent_name_internal(self):
+
+        return self._parent_name_internal
+
+    @parent_name_internal.setter
+    def parent_name_internal(self, value):
+
+        raise QgistAttributeError(translate('global', '"parent_name_internal" must not be changed. (dtype_action parent_name_internal)'))
 
     def as_dict(self):
 
