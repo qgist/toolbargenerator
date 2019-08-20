@@ -30,10 +30,40 @@ specific language governing rights and limitations under the License.
 
 class dtype_toolbar_class:
 
-    def __init__(self):
+    def __init__(self, iface, name_internal, name_translated, actions_list, enabled):
 
-        pass
+        self._name_internal = name_internal
+        self._name_translated = name_translated
+        self._actions_list = actions_list # TODO
+        self._enabled = enabled
+
+        self._loaded = False
+        if self._enabled:
+            self.load(iface)
+
+    def load(self, iface):
+
+        if self._loaded:
+            return
+
+        # TODO
+
+        self._loaded = True
+
+    def unload(self, iface):
+
+        if not self._loaded:
+            return
+
+        # TODO
+
+        self._loaded = False
 
     def as_dict(self):
 
-        return dict()
+        return dict(
+            name_internal = self._name_internal,
+            name_translated = self._name_translated,
+            actions_list = None, # TODO
+            enabled = self._enabled,
+            )
