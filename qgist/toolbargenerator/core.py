@@ -28,7 +28,7 @@ specific language governing rights and limitations under the License.
 # CLASS: TOOLBARGENERATOR CORE
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-class workbench:
+class toolbargenerator:
 
     def __init__(self, iface, plugin_root_fld):
 
