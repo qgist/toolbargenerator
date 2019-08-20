@@ -48,7 +48,10 @@ from PyQt5.QtWidgets import (
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-from .const import CONFIG_FN
+from .const import (
+    CONFIG_FN,
+    PLUGIN_ICON_FN,
+    )
 from .dtype_fsm import dtype_fsm_class
 from .ui_manager import ui_manager_class
 from ..config import (
@@ -109,7 +112,7 @@ class toolbargenerator:
         self._ui_dict['action_manage'] = QAction(translate('global', '&Toolbar Generator Management'))
         self._ui_dict['action_manage'].setObjectName('action_toolbarmanage')
         self._ui_dict['action_manage'].setIcon(QIcon(os.path.join(
-            self._plugin_root_fld, ICON_FLD, 'toolbargenerator.svg'
+            self._plugin_root_fld, ICON_FLD, PLUGIN_ICON_FN
             )))
         self._ui_dict['action_manage'].setEnabled(False)
 
