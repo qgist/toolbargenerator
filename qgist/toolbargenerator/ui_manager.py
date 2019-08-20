@@ -37,6 +37,6 @@ from .ui_manager_base import ui_manager_base_class
 
 class ui_manager_class(ui_manager_base_class):
 
-    def __init__(self, plugin_root_fld):
+    def __init__(self, plugin_root_fld, iface, fsm):
 
         super().__init__(plugin_root_fld)

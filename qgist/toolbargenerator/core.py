@@ -48,6 +48,7 @@ from PyQt5.QtWidgets import (
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+from .const import CONFIG_FN
 from .dtype_fsm import dtype_fsm_class
 from .ui_manager import ui_manager_class
 from ..config import (
@@ -92,3 +93,75 @@ class toolbargenerator:
 
         self._mainwindow = self._iface.mainWindow()
         self._system = platform.system()
+
+    def initGui(self):
+        """
+        QGis Plugin Interface Routine
+        """
+
+        self._translator, self._translator_path = setupTranslation(os.path.join(
+            self._plugin_root_fld, TRANSLATION_FLD
+            ))
+
+        self._ui_dict = {}
+        self._ui_cleanup = []
+
+        self._ui_dict['action_manage'] = QAction(translate('global', '&Toolbar Generator Management'))
+        self._ui_dict['action_manage'].setObjectName('action_toolbarmanage')
+        self._ui_dict['action_manage'].setIcon(QIcon(os.path.join(
+            self._plugin_root_fld, ICON_FLD, 'toolbargenerator.svg'
+            )))
+        self._ui_dict['action_manage'].setEnabled(False)
+
+        toolbarGeneratorMenuText = translate('global', 'Qgist &Toolbar Generator')
+        self._iface.addPluginToMenu(toolbarGeneratorMenuText, self._ui_dict['action_manage'])
+        self._ui_cleanup.append(
+            lambda: self._iface.removePluginMenu(toolbarGeneratorMenuText, self._ui_dict['action_manage'])
+            )
+
+        self._ui_dict['toolbar_iface'] = self._iface.addToolBar(translate('global', 'Qgist Toolbar Generator'))
+        self._ui_dict['toolbar_iface'].setObjectName('toolbar_toolbarmanage')
+        self._ui_cleanup.append(
+            lambda: self._ui_dict.pop('toolbar_iface')
+            )
+
+        self._ui_dict['toolbar_iface'].addAction(self._ui_dict['action_manage'])
+
+        self._connect_ui()
+
+    def unload(self):
+        """
+        QGis Plugin Interface Routine
+        """
+
+        for cleanup_action in self._ui_cleanup:
+            cleanup_action()
+
+    def _connect_ui(self):
+
+        try:
+            config = config_class(os.path.join(get_config_path(), CONFIG_FN))
+            self._fsm = dtype_fsm_class(
+                toolbar_list = config.get('toolbar_list', list()),
+                mainwindow = self._mainwindow,
+                config = config,
+                )
+        except Qgist_ALL_Errors as e:
+            msg_critical(e, self._mainwindow)
+            return
+
+        # TODO
+
+    def _open_manager(self):
+
+        try:
+            manager = ui_manager_class(
+                self._plugin_root_fld,
+                self._iface,
+                self._fsm,
+                )
+        except Qgist_ALL_Errors as e:
+            msg_critical(e, self._mainwindow)
+            return
+
+        manager.exec_()
