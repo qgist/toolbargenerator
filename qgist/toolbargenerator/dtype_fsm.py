@@ -97,7 +97,9 @@ class dtype_fsm_class:
         if len(name) == 0:
             raise QgistWorkbenchNameError(translate('global', '"name" is empty. (dtype_fsm new)'))
 
-        # self._update_config()
+        # TODO
+
+        self._update_config()
 
     def delete_toolbar(self, name, mainwindow):
 
@@ -109,7 +111,9 @@ class dtype_fsm_class:
         if name not in self._toolbar_dict.keys():
             raise QgistValueError(translate('global', '"name" is not a known toolbar. (dtype_fsm delete)'))
 
-        # self._update_config()
+        # TODO
+
+        self._update_config()
 
     def rename_toolbar(self, old_name, new_name, mainwindow):
 
@@ -128,7 +132,9 @@ class dtype_fsm_class:
         if old_name == new_name:
             return
 
-        # self._update_config()
+        # TODO
+
+        self._update_config()
 
     def save_toolbar(self, name, mainwindow):
 
@@ -137,7 +143,9 @@ class dtype_fsm_class:
         if not isinstance(mainwindow, QMainWindow):
             raise QgistTypeError(translate('global', '"mainwindow" must be a QGis mainwindow. (dtype_fsm save)'))
 
-        # self._update_config()
+        # TODO
+
+        self._update_config()
 
     def as_list(self):
 
