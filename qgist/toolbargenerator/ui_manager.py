@@ -25,9 +25,38 @@ specific language governing rights and limitations under the License.
 """
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# IMPORT (Python Standard Library)
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+import os
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# IMPORT (QGIS)
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+from qgis._gui import QgisInterface
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# IMPORT (External Dependencies)
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+# from PyQt5.QtCore import (
+#     Qt,
+#     )
+from PyQt5.QtGui import (
+    QIcon,
+    )
+from PyQt5.QtWidgets import (
+    QListWidgetItem,
+    )
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+from .dtype_fsm import dtype_fsm_class
 from .ui_manager_base import ui_manager_base_class
 
 
@@ -39,4 +68,28 @@ class ui_manager_class(ui_manager_base_class):
 
     def __init__(self, plugin_root_fld, iface, fsm):
 
+        if not isinstance(plugin_root_fld, str):
+            raise QgistTypeError(translate('global', '"plugin_root_fld" must be str. (ui_manager)'))
+        if not os.path.exists(plugin_root_fld):
+            raise QgistValueError(translate('global', '"plugin_root_fld" must exists. (ui_manager)'))
+        if not os.path.isdir(plugin_root_fld):
+            raise QgistValueError(translate('global', '"plugin_root_fld" must be a directory. (ui_manager)'))
+        if not isinstance(iface, QgisInterface):
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface. (ui_manager)'))
+        if not isinstance(fsm, dtype_fsm_class):
+            raise QgistTypeError(translate('global', '"fsm" must be a toolbar generator finite state machine. (ui_manager)'))
+
         super().__init__(plugin_root_fld)
+
+        self._plugin_root_fld = plugin_root_fld
+        self._iface = iface
+        self._fsm = fsm
+
+        self._connect_ui()
+
+    def _connect_ui(self):
+
+        for i in range(10):
+            self._ui_dict['item_%d' % i] = QListWidgetItem('demo %d' % i)
+            self._ui_dict['item_%d' % i].setIcon(QIcon(':/images/new.png'))
+            self._ui_dict['list_actions_all'].addItem(self._ui_dict['item_%d' % i])

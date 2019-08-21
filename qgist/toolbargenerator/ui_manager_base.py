@@ -25,12 +25,29 @@ specific language governing rights and limitations under the License.
 """
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# IMPORT (Python Standard Library)
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+# import os
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # IMPORT (External Dependencies)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 from PyQt5.QtWidgets import (
     QDialog,
+    QHBoxLayout,
+    QListWidget,
     )
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# IMPORT (Internal)
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+# from ..const import ICON_FLD
+from ..util import translate
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -42,3 +59,16 @@ class ui_manager_base_class(QDialog):
     def __init__(self, plugin_root_fld):
 
         super().__init__()
+
+        self.setWindowTitle(translate('global', 'Toolbar Manager'))
+
+        self._ui_dict = {
+            'layout_0_h_root': QHBoxLayout(), # dialog
+            }
+        self.setLayout(self._ui_dict['layout_0_h_root'])
+
+        self._ui_dict['list_actions_toolbar'] = QListWidget()
+        self._ui_dict['layout_0_h_root'].addWidget(self._ui_dict['list_actions_toolbar'])
+
+        self._ui_dict['list_actions_all'] = QListWidget()
+        self._ui_dict['layout_0_h_root'].addWidget(self._ui_dict['list_actions_all'])
