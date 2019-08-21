@@ -105,7 +105,7 @@ class ui_manager_base_class(QDialog):
             self._ui_dict[layout_toolbar] = QHBoxLayout()
             self._ui_dict[layout].addLayout(self._ui_dict[layout_toolbar])
 
-            self._ui_dict['label_' + position] = QLabel(name)
+            self._ui_dict['label_' + position] = QLabel(title)
             self._ui_dict[layout].addWidget(self._ui_dict['label_' + position])
 
             ui_manager_base_class._init_dialogtoolbar(
