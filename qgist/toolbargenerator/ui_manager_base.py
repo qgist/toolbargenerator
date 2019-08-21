@@ -46,7 +46,9 @@ from PyQt5.QtWidgets import (
     QDialog,
     QHBoxLayout,
     QLabel,
+    QLineEdit,
     QListWidget,
+    QSizePolicy,
     QSpacerItem,
     QToolButton,
     QVBoxLayout,
@@ -112,6 +114,13 @@ class ui_manager_base_class(QDialog):
 
             self._ui_dict['list_' + name] = QListWidget()
             self._ui_dict[layout].addWidget(self._ui_dict['list_' + name])
+
+            if position == 'right':
+                self._ui_dict['text_filter'] = QLineEdit()
+                self._ui_dict['text_filter'].setSizePolicy(
+                    QSizePolicy.Expanding, QSizePolicy.Fixed
+                    )
+                self._ui_dict[layout].addWidget(self._ui_dict['text_filter'])
 
     @staticmethod
     def _init_dialogtoolbar(ui_dict, toolbar_layout, plugin_root_fld, items):
