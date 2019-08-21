@@ -28,17 +28,28 @@ specific language governing rights and limitations under the License.
 # IMPORT (Python Standard Library)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-# import os
+import os
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # IMPORT (External Dependencies)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+from PyQt5.QtCore import (
+    QSize,
+    Qt,
+    )
+from PyQt5.QtGui import (
+    QIcon,
+    )
 from PyQt5.QtWidgets import (
     QDialog,
     QHBoxLayout,
+    QLabel,
     QListWidget,
+    QSpacerItem,
+    QToolButton,
+    QVBoxLayout,
     )
 
 
@@ -46,7 +57,7 @@ from PyQt5.QtWidgets import (
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-# from ..const import ICON_FLD
+from ..const import ICON_FLD
 from ..util import translate
 
 
@@ -63,12 +74,68 @@ class ui_manager_base_class(QDialog):
         self.setWindowTitle(translate('global', 'Toolbar Manager'))
 
         self._ui_dict = {
-            'layout_0_h_root': QHBoxLayout(), # dialog
+            'layout_0_v_root': QVBoxLayout(), # dialog
+            'layout_1_h_lists': QHBoxLayout(), # three lists
             }
-        self.setLayout(self._ui_dict['layout_0_h_root'])
+        self.setLayout(self._ui_dict['layout_0_v_root'])
+        self._ui_dict['layout_0_v_root'].addLayout(self._ui_dict['layout_1_h_lists'])
 
-        self._ui_dict['list_actions_toolbar'] = QListWidget()
-        self._ui_dict['layout_0_h_root'].addWidget(self._ui_dict['list_actions_toolbar'])
+        for position, name, title, items in (
+            ('left', 'toolbars', translate('global', 'Toolbars'), (
+                ('new', translate('global', 'New toolbar'), 'FileNew.svg'),
+                ('delete', translate('global', 'Delete toolbar'), 'Delete.svg'),
+                ('save', translate('global', 'Save toolbar'), 'Save.svg'),
+                )),
+            ('center', 'actions_toolbar', translate('global', 'Toolbars'), (
+                ('up', translate('global', 'Move action up'), 'ActionUp.svg'),
+                ('down', translate('global', 'Move action down'), 'ActionDown.svg'),
+                ('remove', translate('global', 'Remove action'), 'ActionDown.svg'),
+                )),
+            ('right', 'actions_all', translate('global', 'Toolbars'), (
+                ('add', translate('global', 'Add action'), 'ActionAdd.svg'),
+                )),
+            ):
 
-        self._ui_dict['list_actions_all'] = QListWidget()
-        self._ui_dict['layout_0_h_root'].addWidget(self._ui_dict['list_actions_all'])
+            layout = 'layout_2_v_%s' % position
+            layout_toolbar = 'layout_3_h_%s_toolbar' % position
+            self._ui_dict[layout] = QVBoxLayout()
+            self._ui_dict['layout_1_h_lists'].addLayout(self._ui_dict[layout])
+            self._ui_dict[layout_toolbar] = QHBoxLayout()
+            self._ui_dict[layout].addLayout(self._ui_dict[layout_toolbar])
+
+            self._ui_dict['label_' + position] = QLabel(name)
+            self._ui_dict[layout].addWidget(self._ui_dict['label_' + position])
+
+            ui_manager_base_class._init_dialogtoolbar(
+                self._ui_dict, self._ui_dict[layout_toolbar], plugin_root_fld, items
+                )
+
+            self._ui_dict['list_' + name] = QListWidget()
+            self._ui_dict[layout].addWidget(self._ui_dict['list_' + name])
+
+    @staticmethod
+    def _init_dialogtoolbar(ui_dict, toolbar_layout, plugin_root_fld, items):
+
+        toolbar_layout.setSpacing(0)
+        toolbar_layout.setContentsMargins(0, 0, 0, 0)
+
+        for name, title, icon in items:
+
+            if name == None:
+                toolbar_layout.addItem(QSpacerItem(10, 10))
+                continue
+
+            toolbutton = QToolButton()
+            toolbutton.setToolTip(title)
+            toolbutton.setIcon(QIcon(os.path.join(
+                plugin_root_fld, ICON_FLD, icon
+            )))
+            toolbutton.setIconSize(QSize(24, 24))  # TODO get icon size from QGis!!!
+            toolbutton.setAutoRaise(True)
+            toolbutton.setFocusPolicy(Qt.NoFocus)
+
+            ui_dict['toolbutton_{NAME:s}'.format(NAME = name)] = toolbutton
+
+            toolbar_layout.addWidget(toolbutton)
+
+        toolbar_layout.addStretch()
