@@ -56,6 +56,7 @@ from PyQt5.QtWidgets import (
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+from .dtype_action import dtype_action_class
 from .dtype_fsm import dtype_fsm_class
 from .ui_manager_base import ui_manager_base_class
 
@@ -88,6 +89,10 @@ class ui_manager_class(ui_manager_base_class):
         self._connect_ui()
 
     def _connect_ui(self):
+
+
+        dtype_action_class.get_all_actions(self._iface.mainWindow())
+
 
         for i in range(10):
             self._ui_dict['item_%d' % i] = QListWidgetItem('demo %d' % i)

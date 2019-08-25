@@ -184,7 +184,7 @@ class dtype_action_class:
             )
 
     @staticmethod
-    def _dict_from_action(action, include_action = False):
+    def _dict_from_action(action, include_action = False, except_none = False):
 
         action_dict = dict(
             name_internal = str(action.objectName()),
@@ -193,7 +193,10 @@ class dtype_action_class:
             )
 
         if action_dict['name_internal'] == '' and action_dict['name_translated'] == '':
-            raise QgistUnnamedActionError(translate('global', '"name_internal" and "name_translated" are empty. (dtype_action _dict_from_action)'))
+            if except_none:
+                return None
+            else:
+                raise QgistUnnamedActionError(translate('global', '"name_internal" and "name_translated" are empty. (dtype_action _dict_from_action)'))
 
         if include_action:
             action_dict['action'] = action
@@ -207,8 +210,14 @@ class dtype_action_class:
             raise QgistTypeError(translate('global', '"mainwindow" must be a QGis mainwindow. (dtype_action get_all_actions)'))
 
         return [
-            dtype_toolbar_action._dict_from_action(action, include_action = True)
-            for action in mainwindow.findChildren(QAction)
+            named_action for named_action in (
+                dtype_action_class._dict_from_action(
+                    action,
+                    include_action = True,
+                    except_none = True
+                    )
+                for action in mainwindow.findChildren(QAction)
+            ) if named_action is not None
             ]
 
     @staticmethod
@@ -217,6 +226,6 @@ class dtype_action_class:
         if not isinstance(action, QAction):
             raise QgistTypeError(translate('global', '"action" must be a QAction. (dtype_action from_action)'))
 
-        return dtype_toolbar_action(
-            **dtype_toolbar_action._dict_from_action(action)
+        return dtype_action_class(
+            **dtype_action_class._dict_from_action(action)
             )
