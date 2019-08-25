@@ -231,7 +231,7 @@ class dtype_action_class:
         return action_dict
 
     @staticmethod
-    def get_all_actions(mainwindow):
+    def get_all_actiondict_list(mainwindow):
 
         if not isinstance(mainwindow, QMainWindow):
             raise QgistTypeError(translate('global', '"mainwindow" must be a QGis mainwindow. (dtype_action get_all_actions)'))

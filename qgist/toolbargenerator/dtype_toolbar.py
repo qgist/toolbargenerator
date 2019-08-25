@@ -131,10 +131,10 @@ class dtype_toolbar_class:
     def _toolbar_fill(self, iface):
 
         mainwindow = iface.mainWindow()
-        all_actions = dtype_action_class.get_all_actions(mainwindow)
+        all_actiondict_list = dtype_action_class.get_all_actiondict_list(mainwindow)
         for action in self._actions_list:
             try:
-                action.find(all_actions)
+                action.find(all_actiondict_list)
                 self._toolbar.addAction(action.action)
             except (QgistActionConfusionError, QgistActionNotFoundError) as e:
                 msg_warning(e, mainwindow)
