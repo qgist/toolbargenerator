@@ -73,6 +73,8 @@ class dtype_action_class:
         self._present = False
         self._action = None
 
+        self._create_id()
+
     def find(self, all_actions):
 
         def search_by(func, name):
@@ -135,15 +137,40 @@ class dtype_action_class:
 
         self._action, self._present = None, False
 
+    def _create_id(self):
+
+        if len(self._name_translated) == 0:
+            prefix = translate('global', '[unnamed]')
+        else:
+            prefix = '"%s"' % self._name_translated
+
+        suffix = ', '.join([
+            item for item in (self._name_internal, self._parent_name_internal) if len(item) > 0
+            ])
+
+        self._id = prefix
+        if len(suffix) > 0:
+             self._id += ' (%s)' % suffix
+
     @property
     def action(self):
 
-        return self._name_internal
+        return self._action
 
     @action.setter
     def action(self, value):
 
         raise QgistAttributeError(translate('global', '"action" must not be changed. (dtype_action action)'))
+
+    @property
+    def id(self):
+
+        return self._id
+
+    @id.setter
+    def id(self, value):
+
+        raise QgistAttributeError(translate('global', '"id" must not be changed. (dtype_action id)'))
 
     @property
     def name_internal(self):
