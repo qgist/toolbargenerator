@@ -91,7 +91,7 @@ class ui_manager_base_class(QDialog):
             ('center', 'actions_toolbar', translate('global', 'Selected actions'), (
                 ('up', translate('global', 'Move action up'), 'ActionUp.svg'),
                 ('down', translate('global', 'Move action down'), 'ActionDown.svg'),
-                ('remove', translate('global', 'Remove action'), 'ActionDown.svg'),
+                ('remove', translate('global', 'Remove action'), 'ActionRemove.svg'),
                 )),
             ('right', 'actions_all', translate('global', 'Available actions'), (
                 ('add', translate('global', 'Add action'), 'ActionAdd.svg'),
