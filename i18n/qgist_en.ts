@@ -332,5 +332,85 @@
         <source>&quot;action&quot; must be a QAction. (dtype_action from_action)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="76"/>
+        <source>Toolbar Manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
+        <source>Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
+        <source>New toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
+        <source>Delete toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
+        <source>Save toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
+        <source>Selected actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
+        <source>Move action up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
+        <source>Move action down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
+        <source>Remove action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
+        <source>Available actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
+        <source>Add action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager.py" line="72"/>
+        <source>&quot;plugin_root_fld&quot; must be str. (ui_manager)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager.py" line="74"/>
+        <source>&quot;plugin_root_fld&quot; must exists. (ui_manager)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager.py" line="76"/>
+        <source>&quot;plugin_root_fld&quot; must be a directory. (ui_manager)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager.py" line="78"/>
+        <source>&quot;iface&quot; must be a QgisInterface. (ui_manager)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager.py" line="80"/>
+        <source>&quot;fsm&quot; must be a toolbar generator finite state machine. (ui_manager)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
