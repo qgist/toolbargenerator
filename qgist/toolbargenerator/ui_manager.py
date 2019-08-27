@@ -56,7 +56,6 @@ from PyQt5.QtWidgets import (
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-from .dtype_action import dtype_action_class
 from .dtype_fsm import dtype_fsm_class
 from .ui_manager_base import ui_manager_base_class
 
@@ -90,14 +89,10 @@ class ui_manager_class(ui_manager_base_class):
 
     def _connect_ui(self):
 
-        named_actions, _ = dtype_action_class.filter_unnamed(
-            dtype_action_class.all_from_mainwindow(self._iface.mainWindow())
-            )
-        self._action_dict = {action.id: action for action in named_actions}
         self._item_dict = {}
 
-        for action_id in sorted(self._action_dict.keys()):
-            self._item_dict[action_id] = self._item_from_action(self._action_dict[action_id])
+        for action_id in sorted(self._fsm.all_actions.keys()):
+            self._item_dict[action_id] = self._item_from_action(self._fsm.all_actions[action_id])
             self._ui_dict['list_actions_all'].addItem(self._item_dict[action_id])
         self._ui_dict['list_actions_all'].setCurrentRow(0)
 

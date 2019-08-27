@@ -35,6 +35,7 @@ from qgis._gui import QgisInterface
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+from .dtype_action import dtype_action_class
 from .dtype_toolbar import dtype_toolbar_class
 from ..config import config_class
 from ..error import (
@@ -69,6 +70,11 @@ class dtype_fsm_class:
             for item in toolbar_list
             }
         self.keys = self._toolbar_dict.keys
+
+        named_actions, _ = dtype_action_class.filter_unnamed(
+            dtype_action_class.all_from_mainwindow(iface.mainWindow())
+            )
+        self._all_actions_dict = {action.id: action for action in named_actions}
 
     def __getitem__(self, name):
 
@@ -155,3 +161,13 @@ class dtype_fsm_class:
             return
 
         self._config['toolbar_list'] = self.as_list()
+
+    @property
+    def all_actions(self):
+
+        return self._all_actions_dict
+
+    @all_actions.setter
+    def all_actions(self, value):
+
+        raise QgistAttributeError(translate('global', '"all_actions" must not be changed. (dtype_fsm all_actions)'))
