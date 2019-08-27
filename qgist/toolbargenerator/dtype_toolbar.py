@@ -117,86 +117,28 @@ class dtype_toolbar_class:
 
         self._loaded = False
 
-    def add_action(self, action_id, iface):
+    def update_actions(self, action_id_list, iface):
 
-        if not isinstance(action_id, str):
-            raise QgistTypeError(translate('global', '"action_id" must be a str. (dtype_toolbar add_action)'))
+        if not isinstance(action_id_list, list):
+            raise QgistTypeError(translate('global', '"action_id_list" must be a list. (dtype_toolbar update_actions)'))
+        if not all([isinstance(action_id, str) for action_id in action_id_list]):
+            raise QgistTypeError(translate('global', 'Items in "action_id_list" must be str. (dtype_toolbar update_actions)'))
         if not isinstance(iface, QgisInterface):
-            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar add_action)'))
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar update_actions)'))
 
         all_actions_dict = dtype_action_class.all_named_from_mainwindow_as_dict(iface.mainWindow())
 
-        if action_id not in all_actions_dict.keys():
-            raise QgistValueError(translate('global', '"action_id" is not present on the QGIS mainwindow. (dtype_toolbar add_action)'))
+        if not all([(action_id in all_actions_dict.keys()) for action_id in action_id_list]):
+            raise QgistTypeError(translate('global', '"action_id_list" contains unknown action ids. (dtype_toolbar update_actions)'))
 
-        action = all_actions_dict[action_id]
-        self._actions_list.append(action)
-
-        if self._loaded:
-            self.reload(iface)
-        else:
+        for action in self._actions_list:
             action.disconnect()
+        self._actions_list.clear()
 
-    def remove_action(self, action_id, iface):
-
-        if not isinstance(action_id, str):
-            raise QgistTypeError(translate('global', '"action_id" must be a str. (dtype_toolbar remove_action)'))
-        if not isinstance(iface, QgisInterface):
-            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar remove_action)'))
-
-        action_index = self._id_to_index(action_id)
-        old_action = self._actions_list.pop(action_index)
-        old_action.disconnect()
+        self._actions_list.extend([all_actions_dict[action_id] for action_id in action_id_list])
 
         if self._loaded:
             self.reload(iface)
-
-    def move_action_up(self, action_id, iface):
-
-        if not isinstance(action_id, str):
-            raise QgistTypeError(translate('global', '"action_id" must be a str. (dtype_toolbar move_action_up)'))
-        if not isinstance(iface, QgisInterface):
-            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar move_action_up)'))
-
-        action_index = self._id_to_index(action_id)
-        if action_index == 0:
-            return
-        (
-            self._actions_list[action_index - 1], self._actions_list[action_index]
-            ) = (
-            self._actions_list[action_index], self._actions_list[action_index - 1]
-            )
-
-        if self._loaded:
-            self.reload(iface)
-
-    def move_action_down(self, action_id, iface):
-
-        if not isinstance(action_id, str):
-            raise QgistTypeError(translate('global', '"action_id" must be a str. (dtype_toolbar move_action_down)'))
-        if not isinstance(iface, QgisInterface):
-            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar move_action_down)'))
-
-        action_index = self._id_to_index(action_id)
-        if action_index == (len(self._actions_list) - 1):
-            return
-        (
-            self._actions_list[action_index + 1], self._actions_list[action_index]
-            ) = (
-            self._actions_list[action_index], self._actions_list[action_index + 1]
-            )
-
-        if self._loaded:
-            self.reload(iface)
-
-    def _id_to_index(self, action_id):
-
-        index_dict = {action.id: index for index, action in enumerate(self._actions_list)}
-
-        if action_id not in index_dict.keys():
-            raise QgistValueError(translate('global', '"action_id" is not part of this toolbar. (dtype_toolbar _id_to_index)'))
-
-        return index_dict[action_id]
 
     def _toolbar_clear(self):
 
