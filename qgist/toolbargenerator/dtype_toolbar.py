@@ -35,16 +35,11 @@ from qgis._gui import QgisInterface
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-from .error import (
-    QgistActionConfusionError,
-    QgistActionNotFoundError,
-    )
 from .dtype_action import dtype_action_class
 from ..error import (
     QgistTypeError,
     QgistValueError,
     )
-from ..msg import msg_warning
 from ..util import translate
 
 
@@ -106,7 +101,7 @@ class dtype_toolbar_class:
             return
 
         self._toolbar_clear()
-        self._toolbar_clear(iface)
+        self._toolbar_fill(iface)
 
     def unload(self, iface):
 
@@ -116,9 +111,7 @@ class dtype_toolbar_class:
         if not self._loaded:
             return
 
-        for action in self._actions_list:
-            action.disconnect()
-
+        self._toolbar_clear()
         del self._toolbar # explicit ...
         self._toolbar = None
 
@@ -126,18 +119,18 @@ class dtype_toolbar_class:
 
     def _toolbar_clear(self):
 
+        for action in self._actions_list:
+            action.disconnect()
+
         self._toolbar.clear()
 
     def _toolbar_fill(self, iface):
 
-        mainwindow = iface.mainWindow()
-        all_actiondict_list = dtype_action_class.get_all_actiondict_list(mainwindow)
+        dtype_action_class.find_in_list(self._actions_list, iface.mainWindow())
+
         for action in self._actions_list:
-            try:
-                action.find(all_actiondict_list)
+            if action.present:
                 self._toolbar.addAction(action.action)
-            except (QgistActionConfusionError, QgistActionNotFoundError) as e:
-                msg_warning(e, mainwindow)
 
     def as_dict(self):
 

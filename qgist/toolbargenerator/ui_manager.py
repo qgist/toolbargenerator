@@ -90,10 +90,14 @@ class ui_manager_class(ui_manager_base_class):
 
     def _connect_ui(self):
 
-        action_list = dtype_action_class.get_all_actions(self._iface.mainWindow())
+        self._action_dict = {
+            action.id: action
+            for action in dtype_action_class.all_from_mainwindow(self._iface.mainWindow())
+            }
+        self._item_dict = {}
 
-        # for action in action_list:
-        #
-        #     self._ui_dict['item_%d' % i] = QListWidgetItem('demo %d' % i)
-        #     self._ui_dict['item_%d' % i].setIcon(QIcon(':/images/new.png'))
-        #     self._ui_dict['list_actions_all'].addItem(self._ui_dict['item_%d' % i])
+        for action_id in sorted(self._action_dict.keys()):
+            action = self._action_dict[action_id]
+            self._item_dict[action.id] = QListWidgetItem(action.id)
+            self._item_dict[action.id].setIcon(action.action.icon())
+            self._ui_dict['list_actions_all'].addItem(self._item_dict[action.id])

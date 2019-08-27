@@ -37,5 +37,5 @@ class QgistActionFound(Exception):
 class QgistActionNotFoundError(Exception):
     pass
 
-class QgistUnnamedActionError(Exception):
-    pass
+# class QgistUnnamedActionError(Exception):
+#     pass

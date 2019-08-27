@@ -42,12 +42,12 @@ from .error import (
     QgistActionConfusionError,
     QgistActionFound,
     QgistActionNotFoundError,
-    QgistUnnamedActionError,
     )
 from ..error import (
     QgistAttributeError,
     QgistTypeError,
     )
+from ..msg import msg_warning
 from ..util import translate
 
 
@@ -57,7 +57,7 @@ from ..util import translate
 
 class dtype_action_class:
 
-    def __init__(self, name_internal, name_translated, parent_name_internal):
+    def __init__(self, name_internal, name_translated, parent_name_internal, action = None):
 
         if not isinstance(name_internal, str):
             raise QgistTypeError(translate('global', '"name_internal" must be a str. (dtype_action)'))
@@ -65,13 +65,19 @@ class dtype_action_class:
             raise QgistTypeError(translate('global', '"name_translated" must be a str. (dtype_action)'))
         if not isinstance(parent_name_internal, str):
             raise QgistTypeError(translate('global', '"parent_name_internal" must be a str. (dtype_action)'))
+        if not isinstance(action, QAction) and action is not None:
+            raise QgistTypeError(translate('global', '"action" must be a QAction or None. (dtype_action)'))
 
         self._name_internal = name_internal
         self._name_translated = name_translated
         self._parent_name_internal = parent_name_internal
 
-        self._present = False
-        self._action = None
+        if action is None:
+            self._present = False
+            self._action = None
+        else:
+            self._present = True
+            self._action = action
 
         self._create_id()
 
@@ -93,13 +99,13 @@ class dtype_action_class:
 
         if not isinstance(all_actions, list):
             raise QgistTypeError(translate('global', '"all_actions" must be a list. (dtype_action find)'))
-        if not all([isinstance(item, dict) for item in all_actions]):
-            raise QgistTypeError(translate('global', 'Items in "all_actions" must be dicts. (dtype_action find)'))
+        if not all([isinstance(item, dtype_action_class) for item in all_actions]):
+            raise QgistTypeError(translate('global', 'Items in "all_actions" must be of type dtype_action_class. (dtype_action find)'))
 
         if self._name_internal != '':
             try:
                 search_by(
-                    lambda item: item['name_internal'],
+                    lambda item: getattr(item, 'name_internal'),
                     self._name_internal
                     )
             except QgistActionNotFoundError:
@@ -114,7 +120,7 @@ class dtype_action_class:
 
         try:
             search_by(
-                lambda item: item['name_translated'],
+                lambda item: getitem(item, 'name_translated'),
                 self._name_translated
                 )
         except QgistActionNotFoundError:
@@ -124,7 +130,7 @@ class dtype_action_class:
 
         try:
             search_by(
-                lambda item: (item['name_translated'], item['parent_name_internal']),
+                lambda item: (getattr(item, 'name_translated'), getattr(item, 'parent_name_internal')),
                 self._name_translated, self._parent_name_internal
                 )
         except QgistActionFound:
@@ -202,6 +208,16 @@ class dtype_action_class:
 
         raise QgistAttributeError(translate('global', '"parent_name_internal" must not be changed. (dtype_action parent_name_internal)'))
 
+    @property
+    def present(self):
+
+        return self._present
+
+    @present.setter
+    def present(self, value):
+
+        raise QgistAttributeError(translate('global', '"present" must not be changed. (dtype_action present)'))
+
     def as_dict(self):
 
         return dict(
@@ -211,41 +227,51 @@ class dtype_action_class:
             )
 
     @staticmethod
-    def _dict_from_action(action, include_action = False, except_none = False):
-
-        action_dict = dict(
-            name_internal = str(action.objectName()),
-            name_translated = str(action.text()),
-            parent_name_internal = str(action.parent().objectName()),
-            )
-
-        if action_dict['name_internal'] == '' and action_dict['name_translated'] == '':
-            if except_none:
-                return None
-            else:
-                raise QgistUnnamedActionError(translate('global', '"name_internal" and "name_translated" are empty. (dtype_action _dict_from_action)'))
-
-        if include_action:
-            action_dict['action'] = action
-
-        return action_dict
-
-    @staticmethod
-    def get_all_actiondict_list(mainwindow):
+    def all_from_mainwindow(mainwindow):
 
         if not isinstance(mainwindow, QMainWindow):
-            raise QgistTypeError(translate('global', '"mainwindow" must be a QGis mainwindow. (dtype_action get_all_actions)'))
+            raise QgistTypeError(translate('global', '"mainwindow" must be a QGis mainwindow. (dtype_action all_from_mainwindow)'))
 
         return [
-            named_action for named_action in (
-                dtype_action_class._dict_from_action(
-                    action,
-                    include_action = True,
-                    except_none = True
-                    )
-                for action in mainwindow.findChildren(QAction)
-            ) if named_action is not None
+            dtype_action_class.from_action(action) for action in mainwindow.findChildren(QAction)
             ]
+
+    @staticmethod
+    def filter_unnamed(action_list):
+
+        if not isinstance(action_list, list):
+            raise QgistTypeError(translate('global', '"action_list" must be a list. (dtype_action filter_unnamed)'))
+        if not all([isinstance(action, dtype_action_class) for action in action_list]):
+            raise QgistTypeError(translate('global', 'Items in "action_list" must be of type dtype_action_class. (dtype_action filter_unnamed)'))
+
+        named = []
+        unnamed = []
+        for action in action_list:
+            if len(action.name_internal) == 0 and len(action.name_translated) == 0:
+                unnamed.append(action)
+            else:
+                named.append(action)
+
+        return named, unnamed
+
+    @staticmethod
+    def find_in_list(action_list, mainwindow):
+
+        if not isinstance(action_list, list):
+            raise QgistTypeError(translate('global', '"action_list" must be a list. (dtype_action find_in_list)'))
+        if not all([isinstance(action, dtype_action_class) for action in action_list]):
+            raise QgistTypeError(translate('global', 'Items in "action_list" must be of type dtype_action_class. (dtype_action find_in_list)'))
+        if not isinstance(mainwindow, QMainWindow):
+            raise QgistTypeError(translate('global', '"mainwindow" must be a QGis mainwindow. (dtype_action find_in_list)'))
+
+        all_actions = dtype_action_class.all_from_mainwindow(mainwindow)
+
+        for action in action_list:
+            try:
+                action.find(all_actions)
+                self._toolbar.addAction(action.action)
+            except (QgistActionConfusionError, QgistActionNotFoundError) as e:
+                msg_warning(e, mainwindow)
 
     @staticmethod
     def from_action(action):
@@ -254,5 +280,8 @@ class dtype_action_class:
             raise QgistTypeError(translate('global', '"action" must be a QAction. (dtype_action from_action)'))
 
         return dtype_action_class(
-            **dtype_action_class._dict_from_action(action)
+            name_internal = str(action.objectName()),
+            name_translated = str(action.text()),
+            parent_name_internal = str(action.parent().objectName()),
+            action = action,
             )
