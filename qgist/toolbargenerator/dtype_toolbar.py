@@ -177,7 +177,14 @@ class dtype_toolbar_class:
         if not isinstance(iface, QgisInterface):
             raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar move_action_down)'))
 
-        # TODO
+        action_index = self._id_to_index(action_id)
+        if action_index == (len(self._actions_list) - 1):
+            return
+        (
+            self._actions_list[action_index + 1], self._actions_list[action_index]
+            ) = (
+            self._actions_list[action_index], self._actions_list[action_index + 1]
+            )
 
         if self._loaded:
             self.reload(iface)
