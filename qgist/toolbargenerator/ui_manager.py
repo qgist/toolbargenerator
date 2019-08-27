@@ -123,7 +123,7 @@ class ui_manager_class(ui_manager_base_class):
 
         new_text = str(new_text).lower()
 
-        for id, item in self._item_dict.items():
+        for id, item in self._all_items_dict.items():
             if new_text in id.lower():
                 item.setHidden(False)
             else:
