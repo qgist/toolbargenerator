@@ -144,7 +144,9 @@ class dtype_toolbar_class:
         if not isinstance(iface, QgisInterface):
             raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar remove_action)'))
 
-        # TODO
+        action_index = self._id_to_index(action_id)
+        old_action = self._actions_list.pop(action_index)
+        old_action.disconnect()
 
         if self._loaded:
             self.reload(iface)
