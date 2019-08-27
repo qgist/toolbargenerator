@@ -148,7 +148,7 @@ class dtype_action_class:
         if len(self._name_translated) == 0:
             prefix = translate('global', '[unnamed]')
         else:
-            prefix = '"%s"' % self._name_translated
+            prefix = '%s' % self._name_translated
 
         suffix = ', '.join([
             item for item in (self._name_internal, self._parent_name_internal) if len(item) > 0
