@@ -239,6 +239,18 @@ class dtype_action_class:
             ]
 
     @staticmethod
+    def all_named_from_mainwindow_as_dict(mainwindow):
+
+        if not isinstance(mainwindow, QMainWindow):
+            raise QgistTypeError(translate('global', '"mainwindow" must be a QGis mainwindow. (dtype_action all_named_from_mainwindow_as_dict)'))
+
+        named_actions, _ = dtype_action_class.filter_unnamed(
+            dtype_action_class.all_from_mainwindow(mainwindow)
+            )
+
+        return {action.id: action for action in named_actions}
+
+    @staticmethod
     def filter_unnamed(action_list):
 
         if not isinstance(action_list, list):
