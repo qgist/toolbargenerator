@@ -65,16 +65,16 @@ class dtype_fsm_class:
 
         self._config = config
 
+        named_actions, _ = dtype_action_class.filter_unnamed(
+            dtype_action_class.all_from_mainwindow(iface.mainWindow())
+            )
+        self._all_actions_dict = {action.id: action for action in named_actions}
+
         self._toolbar_dict = {
             item['name_internal']: dtype_toolbar_class(iface = iface, **item)
             for item in toolbar_list
             }
         self.keys = self._toolbar_dict.keys
-
-        named_actions, _ = dtype_action_class.filter_unnamed(
-            dtype_action_class.all_from_mainwindow(iface.mainWindow())
-            )
-        self._all_actions_dict = {action.id: action for action in named_actions}
 
     def __getitem__(self, name):
 
