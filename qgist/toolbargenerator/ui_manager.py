@@ -90,16 +90,20 @@ class ui_manager_class(ui_manager_base_class):
 
     def _connect_ui(self):
 
-        self._item_dict = {}
+        self._all_items_dict = {}
 
         all_actions_dict = dtype_action_class.all_named_from_mainwindow_as_dict(self._iface.mainWindow())
         for action_id in sorted(all_actions_dict.keys()):
-            self._item_dict[action_id] = self._item_from_action(all_actions_dict[action_id])
-            self._ui_dict['list_actions_all'].addItem(self._item_dict[action_id])
+            self._all_items_dict[action_id] = self._item_from_action(all_actions_dict[action_id])
+            self._ui_dict['list_actions_all'].addItem(self._all_items_dict[action_id])
         self._ui_dict['list_actions_all'].setCurrentRow(0)
 
         self._ui_dict['text_filter'].textChanged.connect(self._text_filter_textchanged)
-        self._ui_dict['toolbutton_add'].clicked.connect(self._toolbutton_add_clicked)
+
+        for name in ('add', 'remove', 'up', 'down'):
+            self._ui_dict['toolbutton_%s' % name].clicked.connect(
+                getattr(self, '_toolbutton_%s_clicked' % name)
+                )
 
     def _item_from_action(self, action):
 
@@ -131,3 +135,22 @@ class ui_manager_class(ui_manager_base_class):
         if item is None:
             return
         self._ui_dict['list_actions_toolbar'].addItem(self._item_from_item(item))
+
+    def _toolbutton_remove_clicked(self):
+
+        self._ui_dict['list_actions_toolbar'].takeItem(
+            self._ui_dict['list_actions_toolbar'].currentRow()
+            )
+
+    def _toolbutton_up_clicked(self):
+
+        index = int(self._ui_dict['list_actions_toolbar'].currentRow())
+        if index <= 0:
+            return
+        item = self._ui_dict['list_actions_toolbar'].takeItem(index)
+        self._ui_dict['list_actions_toolbar'].insertItem(index - 1, item)
+        self._ui_dict['list_actions_toolbar'].setCurrentRow(index - 1)
+
+    def _toolbutton_down_clicked(self):
+
+        pass
