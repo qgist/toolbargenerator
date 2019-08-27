@@ -127,7 +127,7 @@ class dtype_toolbar_class:
         all_actions_dict = dtype_action_class.all_named_from_mainwindow_as_dict(iface.mainWindow())
 
         if action_id not in all_actions_dict.keys():
-            raise QgistValueError(translate('global', '"action_id" is unknown. (dtype_toolbar add_action)'))
+            raise QgistValueError(translate('global', '"action_id" is not present on the QGIS mainwindow. (dtype_toolbar add_action)'))
 
         action = all_actions_dict[action_id]
         self._actions_list.append(action)
@@ -172,6 +172,15 @@ class dtype_toolbar_class:
 
         if self._loaded:
             self.reload(iface)
+
+    def _id_to_index(self, action_id):
+
+        index_dict = {action.id: index for index, action in enumerate(self._actions_list)}
+
+        if action_id not in index_dict.keys():
+            raise QgistValueError(translate('global', '"action_id" is not part of this toolbar. (dtype_toolbar _id_to_index)'))
+
+        return index_dict[action_id]
 
     def _toolbar_clear(self):
 
