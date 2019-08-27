@@ -84,7 +84,7 @@ class dtype_action_class:
     def find(self, all_actions):
 
         def search_by(func, name):
-            temp_dict = {func(action): action for action in all_actions}
+            temp_dict = {func(action): action.action for action in all_actions}
             temp_names = [func(action) for action in all_actions]
             name_count = temp_names.count(name)
             if name_count != 1:
@@ -120,7 +120,7 @@ class dtype_action_class:
 
         try:
             search_by(
-                lambda item: getitem(item, 'name_translated'),
+                lambda item: getattr(item, 'name_translated'),
                 self._name_translated
                 )
         except QgistActionNotFoundError:
@@ -131,7 +131,7 @@ class dtype_action_class:
         try:
             search_by(
                 lambda item: (getattr(item, 'name_translated'), getattr(item, 'parent_name_internal')),
-                self._name_translated, self._parent_name_internal
+                (self._name_translated, self._parent_name_internal)
                 )
         except QgistActionFound:
             return
@@ -283,7 +283,6 @@ class dtype_action_class:
         for action in action_list:
             try:
                 action.find(all_actions)
-                self._toolbar.addAction(action.action)
             except (QgistActionConfusionError, QgistActionNotFoundError) as e:
                 msg_warning(e, mainwindow)
 

@@ -42,15 +42,14 @@ from qgis._gui import QgisInterface
 # IMPORT (External Dependencies)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-# from PyQt5.QtCore import (
-#     Qt,
-#     )
 from PyQt5.QtGui import (
     QIcon,
     )
 from PyQt5.QtWidgets import (
+    QInputDialog,
     QListWidgetItem,
     )
+
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # IMPORT (Internal)
@@ -58,7 +57,14 @@ from PyQt5.QtWidgets import (
 
 from .dtype_action import dtype_action_class
 from .dtype_fsm import dtype_fsm_class
+from .error import QgistToolbarNameError
 from .ui_manager_base import ui_manager_base_class
+from ..error import Qgist_ALL_Errors
+from ..msg import (
+    msg_critical,
+    msg_warning,
+    )
+from ..util import translate
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -104,11 +110,15 @@ class ui_manager_class(ui_manager_base_class):
             self._ui_dict['toolbutton_%s' % name].clicked.connect(
                 getattr(self, '_toolbutton_%s_clicked' % name)
                 )
+        self._ui_dict['list_toolbars'].currentRowChanged.connect(self._list_toolbars_currentrowchanged)
+
+        self._update_view()
 
     def _item_from_action(self, action):
 
         item = QListWidgetItem(action.id)
-        item.setIcon(action.action.icon())
+        if action.action is not None:
+            item.setIcon(action.action.icon())
 
         return item
 
@@ -162,12 +172,88 @@ class ui_manager_class(ui_manager_base_class):
 
     def _toolbutton_new_clicked(self):
 
-        pass
+        new_name_translated, user_ok = QInputDialog.getText(
+            self,
+            translate('global', 'New toolbar'),
+            translate('global', 'Name of new toolbar')
+            )
+
+        if not user_ok:
+            return
+
+        try:
+            self._fsm.new_toolbar(new_name_translated, self._iface)
+            self._update_view()
+            self._select_toolbar(new_name_translated)
+        except QgistToolbarNameError as e:
+            msg_warning(e, self)
+            return
+        except Qgist_ALL_Errors as e:
+            msg_critical(e, self)
+            self.reject()
+            return
 
     def _toolbutton_delete_clicked(self):
 
-        pass
+        current_item = self._ui_dict['list_toolbars'].currentItem()
+        if current_item is None:
+            return
+        name_translated = str(current_item.text())
+
+        try:
+            self._fsm.delete_toolbar(name_translated, self._iface)
+            self._update_view()
+        except Qgist_ALL_Errors as e:
+            msg_critical(e, self)
+            self.reject()
+            return
 
     def _toolbutton_save_clicked(self):
 
-        pass
+        current_item = self._ui_dict['list_toolbars'].currentItem()
+        if current_item is None:
+            return
+        name_translated = str(current_item.text())
+
+        try:
+            self._fsm.save_toolbar(name_translated, self._iface, self._get_selected_actions())
+            self._update_view()
+            self._select_toolbar(name_translated)
+        except Qgist_ALL_Errors as e:
+            msg_critical(e, self)
+            self.reject()
+            return
+
+    def _get_selected_actions(self):
+
+        return [
+            str(self._ui_dict['list_actions_toolbar'].item(index).text())
+            for index in range(self._ui_dict['list_actions_toolbar'].count())
+            ]
+
+    def _list_toolbars_currentrowchanged(self):
+
+        self._ui_dict['list_actions_toolbar'].clear()
+
+        current_item = self._ui_dict['list_toolbars'].currentItem()
+        if current_item is None:
+            return
+        name_translated = str(current_item.text())
+
+        for action in self._fsm[name_translated].get_actions():
+            self._ui_dict['list_actions_toolbar'].addItem(self._item_from_action(action))
+
+    def _select_toolbar(self, name_translated):
+
+        index = list(sorted(self._fsm.keys())).index(name_translated)
+        self._ui_dict['list_toolbars'].setCurrentRow(index)
+
+    def _update_view(self):
+
+        self._ui_dict['list_toolbars'].clear()
+        self._ui_dict['list_actions_toolbar'].clear()
+
+        for name_internal in sorted(self._fsm.keys()):
+            self._ui_dict['list_toolbars'].addItem(
+                QListWidgetItem(self._fsm[name_internal].name_translated)
+                )

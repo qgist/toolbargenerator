@@ -36,6 +36,7 @@ from qgis._gui import QgisInterface
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 from .dtype_toolbar import dtype_toolbar_class
+from .error import QgistToolbarNameError
 from ..config import config_class
 from ..error import (
     QgistAttributeError,
@@ -65,7 +66,7 @@ class dtype_fsm_class:
         self._config = config
 
         self._toolbar_dict = {
-            item['name_internal']: dtype_toolbar_class(iface = iface, **item)
+            item['name_translated']: dtype_toolbar_class(iface = iface, **item)
             for item in toolbar_list
             }
         self.keys = self._toolbar_dict.keys
@@ -83,65 +84,83 @@ class dtype_fsm_class:
 
         return len(self._toolbar_dict)
 
-    def new_toolbar(self, name, iface):
+    def new_toolbar(self, name_translated, iface):
 
-        if not isinstance(name, str):
-            raise QgistTypeError(translate('global', '"name" must be str. (dtype_fsm new)'))
+        if not isinstance(name_translated, str):
+            raise QgistTypeError(translate('global', '"name_translated" must be str. (dtype_fsm new)'))
         if not isinstance(iface, QgisInterface):
-            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface. (dtype_fsm)'))
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface. (dtype_fsm new)'))
 
-        if name in self._toolbar_dict.keys():
-            raise QgistWorkbenchNameError(translate('global', '"name" is a known toolbar, i.e. already exists. (dtype_fsm new)'))
-        if len(name) == 0:
-            raise QgistWorkbenchNameError(translate('global', '"name" is empty. (dtype_fsm new)'))
+        if name_translated in self._toolbar_dict.keys():
+            raise QgistToolbarNameError(translate('global', '"name_translated" is a known toolbar, i.e. already exists. (dtype_fsm new)'))
+        if len(name_translated) == 0:
+            raise QgistToolbarNameError(translate('global', '"name_translated" is empty. (dtype_fsm new)'))
 
-        # TODO
+        name_internal = dtype_toolbar_class.translated_to_internal_name(name_translated)
+        if name_internal in {item.name_internal for item in self._toolbar_dict.values()}:
+            raise QgistToolbarNameError(translate('global', '"name_translated" is translates to a known toolbar, i.e. already exists. (dtype_fsm new)'))
+
+        self._toolbar_dict[name_translated] = dtype_toolbar_class(
+            name_internal = name_internal,
+            name_translated = name_translated,
+            actions_list = [],
+            enabled = True,
+            iface = iface,
+            )
 
         self._update_config()
 
-    def delete_toolbar(self, name, iface):
+    def delete_toolbar(self, name_translated, iface):
 
-        if not isinstance(name, str):
-            raise QgistTypeError(translate('global', '"name" must be str. (dtype_fsm delete)'))
+        if not isinstance(name_translated, str):
+            raise QgistTypeError(translate('global', '"name_translated" must be str. (dtype_fsm delete)'))
         if not isinstance(iface, QgisInterface):
-            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface. (dtype_fsm)'))
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface. (dtype_fsm delete)'))
 
-        if name not in self._toolbar_dict.keys():
-            raise QgistValueError(translate('global', '"name" is not a known toolbar. (dtype_fsm delete)'))
+        if name_translated not in self._toolbar_dict.keys():
+            raise QgistValueError(translate('global', '"name_translated" is not a known toolbar. (dtype_fsm delete)'))
 
-        # TODO
+        self._toolbar_dict.pop(name_translated)
 
         self._update_config()
 
-    def rename_toolbar(self, old_name, new_name, iface):
+    def rename_toolbar(self, old_name_translated, new_name_translated, iface):
 
-        if not isinstance(old_name, str):
-            raise QgistTypeError(translate('global', '"old_name" must be str. (dtype_fsm rename)'))
-        if not isinstance(new_name, str):
-            raise QgistTypeError(translate('global', '"new_name" must be str. (dtype_fsm rename)'))
+        if not isinstance(old_name_translated, str):
+            raise QgistTypeError(translate('global', '"old_name_translated" must be str. (dtype_fsm rename)'))
+        if not isinstance(new_name_translated, str):
+            raise QgistTypeError(translate('global', '"new_name_translated" must be str. (dtype_fsm rename)'))
         if not isinstance(iface, QgisInterface):
-            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface. (dtype_fsm)'))
-        if old_name not in self._toolbar_dict.keys():
-            raise QgistValueError(translate('global', '"old_name" is not a known toolbar. (dtype_fsm rename)'))
-        if new_name in self._toolbar_dict.keys():
-            raise QgistValueError(translate('global', '"new_name" is a known toolbar, i.e. already exists. (dtype_fsm rename)'))
-        if len(new_name) == 0:
-            raise QgistValueError(translate('global', '"new_name" is empty. (dtype_fsm rename)'))
-        if old_name == new_name:
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface. (dtype_fsm rename)'))
+        if old_name_translated not in self._toolbar_dict.keys():
+            raise QgistValueError(translate('global', '"old_name_translated" is not a known toolbar. (dtype_fsm rename)'))
+        if new_name_translated in self._toolbar_dict.keys():
+            raise QgistValueError(translate('global', '"new_name_translated" is a known toolbar, i.e. already exists. (dtype_fsm rename)'))
+        if len(new_name_translated) == 0:
+            raise QgistValueError(translate('global', '"new_name_translated" is empty. (dtype_fsm rename)'))
+        if old_name_translated == new_name_translated:
             return
 
+        new_name_internal = dtype_toolbar_class.translated_to_internal_name(new_name_translated)
+        if new_name_internal in {item['name_internal'] for item in self._toolbar_dict.values()}:
+            raise QgistToolbarNameError(translate('global', '"new_name_translated" is translates to a known toolbar, i.e. already exists. (dtype_fsm rename)'))
+
         # TODO
 
         self._update_config()
 
-    def save_toolbar(self, name, iface):
+    def save_toolbar(self, name_translated, iface, name_list):
 
-        if not isinstance(name, str):
-            raise QgistTypeError(translate('global', '"name" must be str. (dtype_fsm save)'))
+        if not isinstance(name_translated, str):
+            raise QgistTypeError(translate('global', '"name_translated" must be str. (dtype_fsm save)'))
         if not isinstance(iface, QgisInterface):
-            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface. (dtype_fsm)'))
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface. (dtype_fsm save)'))
+        if not isinstance(name_list, list):
+            raise QgistTypeError(translate('global', '"name_list" must be a list. (dtype_fsm save)'))
+        if not all([isinstance(name, str) for name in name_list]):
+            raise QgistTypeError(translate('global', 'Items in "name_list" must be str. (dtype_fsm save)'))
 
-        # TODO
+        self._toolbar_dict[name_translated].update_actions(name_list, iface)
 
         self._update_config()
 

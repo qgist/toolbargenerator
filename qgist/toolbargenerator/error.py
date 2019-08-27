@@ -37,5 +37,8 @@ class QgistActionFound(Exception):
 class QgistActionNotFoundError(Exception):
     pass
 
+class QgistToolbarNameError(Exception):
+    pass
+
 # class QgistUnnamedActionError(Exception):
 #     pass

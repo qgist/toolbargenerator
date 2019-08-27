@@ -25,6 +25,13 @@ specific language governing rights and limitations under the License.
 """
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# IMPORT (Python Standard Library)
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+import re
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # IMPORT (QGIS)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -37,6 +44,7 @@ from qgis._gui import QgisInterface
 
 from .dtype_action import dtype_action_class
 from ..error import (
+    QgistAttributeError,
     QgistTypeError,
     QgistValueError,
     )
@@ -117,6 +125,12 @@ class dtype_toolbar_class:
 
         self._loaded = False
 
+    def get_actions(self):
+
+        return (
+            action for action in self._actions_list
+            )
+
     def update_actions(self, action_id_list, iface):
 
         if not isinstance(action_id_list, list):
@@ -163,3 +177,28 @@ class dtype_toolbar_class:
             actions_list = [item.as_dict() for item in self._actions_list],
             enabled = self._enabled,
             )
+
+    @property
+    def name_internal(self):
+
+        return self._name_internal
+
+    @name_internal.setter
+    def name_internal(self, value):
+
+        raise QgistAttributeError(translate('global', '"name_internal" must not be changed. (dtype_toolbar name_internal)'))
+
+    @property
+    def name_translated(self):
+
+        return self._name_translated
+
+    @name_translated.setter
+    def name_translated(self, value):
+
+        raise QgistAttributeError(translate('global', '"name_translated" must not be changed. (dtype_toolbar name_translated)'))
+
+    @staticmethod
+    def translated_to_internal_name(name_translated):
+
+        return translate('global', 'custom') + '_' + re.sub(r'\W+', '', name_translated)
