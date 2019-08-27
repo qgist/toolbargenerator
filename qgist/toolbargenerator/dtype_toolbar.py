@@ -81,7 +81,7 @@ class dtype_toolbar_class:
     def load(self, iface):
 
         if not isinstance(iface, QgisInterface):
-            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar)'))
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar load)'))
 
         if self._loaded:
             return
@@ -95,7 +95,7 @@ class dtype_toolbar_class:
     def reload(self, iface):
 
         if not isinstance(iface, QgisInterface):
-            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar)'))
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar reload)'))
 
         if not self._loaded:
             return
@@ -106,7 +106,7 @@ class dtype_toolbar_class:
     def unload(self, iface):
 
         if not isinstance(iface, QgisInterface):
-            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar)'))
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar unload)'))
 
         if not self._loaded:
             return
@@ -117,33 +117,53 @@ class dtype_toolbar_class:
 
         self._loaded = False
 
-    def add_action(self, action_id):
+    def add_action(self, action_id, iface):
+
+        if not isinstance(action_id, str):
+            raise QgistTypeError(translate('global', '"action_id" must be a str. (dtype_toolbar add_action)'))
+        if not isinstance(iface, QgisInterface):
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar add_action)'))
 
         # TODO
 
         if self._loaded:
-            self.reload()
+            self.reload(iface)
 
-    def remove_action(self, action_id):
+    def remove_action(self, action_id, iface):
 
-        # TODO
-
-        if self._loaded:
-            self.reload()
-
-    def move_action_up(self, action_id):
+        if not isinstance(action_id, str):
+            raise QgistTypeError(translate('global', '"action_id" must be a str. (dtype_toolbar remove_action)'))
+        if not isinstance(iface, QgisInterface):
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar remove_action)'))
 
         # TODO
 
         if self._loaded:
-            self.reload()
+            self.reload(iface)
 
-    def move_action_down(self, action_id):
+    def move_action_up(self, action_id, iface):
+
+        if not isinstance(action_id, str):
+            raise QgistTypeError(translate('global', '"action_id" must be a str. (dtype_toolbar move_action_up)'))
+        if not isinstance(iface, QgisInterface):
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar move_action_up)'))
 
         # TODO
 
         if self._loaded:
-            self.reload()
+            self.reload(iface)
+
+    def move_action_down(self, action_id, iface):
+
+        if not isinstance(action_id, str):
+            raise QgistTypeError(translate('global', '"action_id" must be a str. (dtype_toolbar move_action_down)'))
+        if not isinstance(iface, QgisInterface):
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar move_action_down)'))
+
+        # TODO
+
+        if self._loaded:
+            self.reload(iface)
 
     def _toolbar_clear(self):
 
