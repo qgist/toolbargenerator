@@ -102,9 +102,9 @@ class ui_manager_class(ui_manager_base_class):
             self._item_dict[action.id].setIcon(action.action.icon())
             self._ui_dict['list_actions_all'].addItem(self._item_dict[action.id])
 
-        self._ui_dict['text_filter'].textChanged.connect(self._filter_all_actions)
+        self._ui_dict['text_filter'].textChanged.connect(self._text_filter_textchanged)
 
-    def _filter_all_actions(self, new_text):
+    def _text_filter_textchanged(self, new_text):
 
         new_text = str(new_text).lower()
 
