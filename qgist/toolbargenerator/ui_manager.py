@@ -100,7 +100,7 @@ class ui_manager_class(ui_manager_base_class):
 
         self._ui_dict['text_filter'].textChanged.connect(self._text_filter_textchanged)
 
-        for name in ('add', 'remove', 'up', 'down'):
+        for name in ('add', 'remove', 'up', 'down', 'new', 'delete', 'save'):
             self._ui_dict['toolbutton_%s' % name].clicked.connect(
                 getattr(self, '_toolbutton_%s_clicked' % name)
                 )
@@ -159,3 +159,15 @@ class ui_manager_class(ui_manager_base_class):
         item = self._ui_dict['list_actions_toolbar'].takeItem(index)
         self._ui_dict['list_actions_toolbar'].insertItem(index + 1, item)
         self._ui_dict['list_actions_toolbar'].setCurrentRow(index + 1)
+
+    def _toolbutton_new_clicked(self):
+
+        pass
+
+    def _toolbutton_delete_clicked(self):
+
+        pass
+
+    def _toolbutton_save_clicked(self):
+
+        pass
