@@ -124,10 +124,18 @@ class dtype_toolbar_class:
         if not isinstance(iface, QgisInterface):
             raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar add_action)'))
 
-        # TODO
+        all_actions_dict = dtype_action_class.all_named_from_mainwindow_as_dict(iface.mainWindow())
+
+        if action_id not in all_actions_dict.keys():
+            raise QgistValueError(translate('global', '"action_id" is unknown. (dtype_toolbar add_action)'))
+
+        action = all_actions_dict[action_id]
+        self._actions_list.append(action)
 
         if self._loaded:
             self.reload(iface)
+        else:
+            action.disconnect()
 
     def remove_action(self, action_id, iface):
 
