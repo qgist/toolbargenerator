@@ -97,12 +97,26 @@ class ui_manager_class(ui_manager_base_class):
         self._item_dict = {}
 
         for action_id in sorted(self._action_dict.keys()):
-            action = self._action_dict[action_id]
-            self._item_dict[action.id] = QListWidgetItem(action.id)
-            self._item_dict[action.id].setIcon(action.action.icon())
-            self._ui_dict['list_actions_all'].addItem(self._item_dict[action.id])
+            self._item_dict[action_id] = self._item_from_action(self._action_dict[action_id])
+            self._ui_dict['list_actions_all'].addItem(self._item_dict[action_id])
+        self._ui_dict['list_actions_all'].setCurrentRow(0)
 
         self._ui_dict['text_filter'].textChanged.connect(self._text_filter_textchanged)
+        self._ui_dict['toolbutton_add'].clicked.connect(self._toolbutton_add_clicked)
+
+    def _item_from_action(self, action):
+
+        item = QListWidgetItem(action.id)
+        item.setIcon(action.action.icon())
+
+        return item
+
+    def _item_from_item(self, old_item):
+
+        new_item = QListWidgetItem(old_item.text())
+        new_item.setIcon(old_item.icon())
+
+        return new_item
 
     def _text_filter_textchanged(self, new_text):
 
@@ -113,3 +127,10 @@ class ui_manager_class(ui_manager_base_class):
                 item.setHidden(False)
             else:
                 item.setHidden(True)
+
+    def _toolbutton_add_clicked(self):
+
+        item = self._ui_dict['list_actions_all'].currentItem()
+        if item is None:
+            return
+        self._ui_dict['list_actions_toolbar'].addItem(self._item_from_item(item))
