@@ -158,6 +158,8 @@ class dtype_action_class:
         if len(suffix) > 0:
              self._id += ' (%s)' % suffix
 
+        self._id = self._id.replace('&', '')
+
     @property
     def action(self):
 
