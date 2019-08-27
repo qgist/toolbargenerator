@@ -153,4 +153,9 @@ class ui_manager_class(ui_manager_base_class):
 
     def _toolbutton_down_clicked(self):
 
-        pass
+        index = int(self._ui_dict['list_actions_toolbar'].currentRow())
+        if index >= self._ui_dict['list_actions_toolbar'].count():
+            return
+        item = self._ui_dict['list_actions_toolbar'].takeItem(index)
+        self._ui_dict['list_actions_toolbar'].insertItem(index + 1, item)
+        self._ui_dict['list_actions_toolbar'].setCurrentRow(index + 1)
