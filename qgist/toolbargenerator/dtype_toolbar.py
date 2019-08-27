@@ -117,6 +117,34 @@ class dtype_toolbar_class:
 
         self._loaded = False
 
+    def add_action(self, action_id):
+
+        # TODO
+
+        if self._loaded:
+            self.reload()
+
+    def remove_action(self, action_id):
+
+        # TODO
+
+        if self._loaded:
+            self.reload()
+
+    def move_action_up(self, action_id):
+
+        # TODO
+
+        if self._loaded:
+            self.reload()
+
+    def move_action_down(self, action_id):
+
+        # TODO
+
+        if self._loaded:
+            self.reload()
+
     def _toolbar_clear(self):
 
         for action in self._actions_list:
