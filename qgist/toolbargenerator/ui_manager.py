@@ -90,10 +90,10 @@ class ui_manager_class(ui_manager_base_class):
 
     def _connect_ui(self):
 
-        self._action_dict = {
-            action.id: action
-            for action in dtype_action_class.all_from_mainwindow(self._iface.mainWindow())
-            }
+        named_actions, _ = dtype_action_class.filter_unnamed(
+            dtype_action_class.all_from_mainwindow(self._iface.mainWindow())
+            )
+        self._action_dict = {action.id: action for action in named_actions}
         self._item_dict = {}
 
         for action_id in sorted(self._action_dict.keys()):
