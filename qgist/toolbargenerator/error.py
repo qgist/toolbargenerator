@@ -36,6 +36,3 @@ class QgistActionNotFoundError(Exception):
 
 class QgistToolbarNameError(Exception):
     pass
-
-# class QgistUnnamedActionError(Exception):
-#     pass
