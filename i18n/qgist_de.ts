@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="de_DE">
+<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
 <context>
     <name>global</name>
     <message>
@@ -256,7 +255,7 @@
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="76"/>
         <source>Toolbar Manager</source>
-        <translation>Manager für &amp;Werkzeugleisten</translation>
+        <translation>Manager für Werkzeugleisten</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
