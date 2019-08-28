@@ -31,9 +31,6 @@ specific language governing rights and limitations under the License.
 class QgistActionConfusionError(Exception):
     pass
 
-class QgistActionFound(Exception):
-    pass
-
 class QgistActionNotFoundError(Exception):
     pass
 

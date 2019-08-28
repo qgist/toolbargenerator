@@ -40,7 +40,6 @@ from PyQt5.QtWidgets import (
 
 from .error import (
     QgistActionConfusionError,
-    QgistActionFound,
     QgistActionNotFoundError,
     )
 from ..error import (
@@ -81,60 +80,108 @@ class dtype_action_class:
 
         self._create_id()
 
+    def __eq__(self, other_action):
+
+        if all([
+            len(self.name_translated) > 0,
+            len(other_action.name_translated) > 0,
+            len(self.name_internal) > 0,
+            len(other_action.name_internal) > 0,
+            len(self.parent_name_internal) > 0,
+            len(other_action.parent_name_internal) > 0,
+            ]):
+            if all([
+                self.name_translated == other_action.name_translated,
+                self.name_internal == other_action.name_internal,
+                self.parent_name_internal == other_action.parent_name_internal,
+                ]):
+                return 10
+
+        if all([
+            len(self.name_translated) > 0,
+            len(other_action.name_translated) > 0,
+            len(self.name_internal) > 0,
+            len(other_action.name_internal) > 0,
+            ]):
+            if all([
+                self.name_translated == other_action.name_translated,
+                self.name_internal == other_action.name_internal,
+                ]):
+                return 9
+
+        if all([
+            len(self.name_internal) > 0,
+            len(other_action.name_internal) > 0,
+            len(self.parent_name_internal) > 0,
+            len(other_action.parent_name_internal) > 0,
+            ]):
+            if all([
+                self.name_internal == other_action.name_internal,
+                self.parent_name_internal == other_action.parent_name_internal,
+                ]):
+                return 8
+
+        if all([
+            len(self.name_translated) > 0,
+            len(other_action.name_translated) > 0,
+            len(self.parent_name_internal) > 0,
+            len(other_action.parent_name_internal) > 0,
+            ]):
+            if all([
+                self.name_translated == other_action.name_translated,
+                self.parent_name_internal == other_action.parent_name_internal,
+                ]):
+                return 7
+
+        if len(self.name_internal) > 0 and len(other_action.name_internal) > 0:
+            if self.name_internal == other_action.name_internal:
+                return 6
+
+        if len(self.name_translated) > 0 and len(other_action.name_translated) > 0:
+            if self.name_translated == other_action.name_translated:
+                return 5
+
+        return 0
+
     def find(self, all_actions):
 
-        def search_by(func, name):
-            temp_dict = {func(action): action.action for action in all_actions}
-            temp_names = [func(action) for action in all_actions]
-            name_count = temp_names.count(name)
-            if name_count != 1:
-                self._action, self._present = None, False
-                if name_count == 0:
-                    raise QgistActionNotFoundError('"{NAME:s}": '.format(NAME = str(name)) + translate('global', 'Action could not be found. (dtype_action find)'))
-                else:
-                    raise QgistActionConfusionError('"{NAME:s}": '.format(NAME = str(name)) + translate('global', 'Confused, multiple matching actions. (dtype_action find)'))
-            else:
-                self._action, self._present = temp_dict[name], True
-                raise QgistActionFound()
+        self._action, self._present = None, False
 
-        if not isinstance(all_actions, list):
-            raise QgistTypeError(translate('global', '"all_actions" must be a list. (dtype_action find)'))
-        if not all([isinstance(item, dtype_action_class) for item in all_actions]):
-            raise QgistTypeError(translate('global', 'Items in "all_actions" must be of type dtype_action_class. (dtype_action find)'))
+        rank_list = [
+            (rank, action) for rank, action in
+            ((self == action, action) for action in all_actions)
+            if rank > 0
+            ]
 
-        if self._name_internal != '':
-            try:
-                search_by(
-                    lambda item: getattr(item, 'name_internal'),
-                    self._name_internal
-                    )
-            except QgistActionNotFoundError:
-                pass
-            except QgistActionFound:
-                self._name_translated = str(self._action.text())
-                return
+        if len(rank_list) == 0:
+            raise QgistActionNotFoundError(translate('global', 'Action could not be found. (dtype_action find)'))
 
-        if self._name_translated == '':
-            self._action, self._present = None, False
-            raise QgistActionNotFoundError('"{NAME:s}": '.format(NAME = self._name_translated) + translate('global', 'Action could not be found. (dtype_action  find)'))
+        rank_dict = {rank: list() for rank in range(5, 11)}
+        for rank, action in rank_list:
+            rank_dict[rank].append(action)
 
-        try:
-            search_by(
-                lambda item: getattr(item, 'name_translated'),
-                self._name_translated
-                )
-        except QgistActionNotFoundError:
-            pass
-        except QgistActionFound:
+        for rank in range(10, 4, -1):
+
+            if len(rank_dict[rank]) == 0:
+                continue
+
+            if len(rank_dict[rank]) > 1:
+                try:
+                    raise QgistActionConfusionError(
+                        '{RANK:d}|{TRANSLATED:s}|{INTERNAL:s}|{PARENT:s}: '.format(
+                            RANK = rank,
+                            TRANSLATED = self._name_translated,
+                            INTERNAL = self._name_internal,
+                            PARENT = self._parent_name_internal,
+                            ) + translate('global', 'Confused, multiple matching actions. (dtype_action find)')
+                        )
+                except QgistActionConfusionError as e:
+                    msg_warning(e)
+
+            self._action, self._present = rank_dict[rank][0].action, True
             return
 
-        try:
-            search_by(
-                lambda item: (getattr(item, 'name_translated'), getattr(item, 'parent_name_internal')),
-                (self._name_translated, self._parent_name_internal)
-                )
-        except QgistActionFound:
-            return
+        raise QgistActionConfusionError(translate('global', 'Confused, something odd happened. (dtype_action find)'))
 
     def disconnect(self):
 
