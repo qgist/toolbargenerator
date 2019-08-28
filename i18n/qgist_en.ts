@@ -98,42 +98,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="60"/>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="63"/>
         <source>&quot;name_internal&quot; must be str. (dtype_toolbar)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="62"/>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="65"/>
         <source>&quot;name_internal&quot; must not be empty. (dtype_toolbar)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="64"/>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="67"/>
         <source>&quot;name_translated&quot; must be str. (dtype_toolbar)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="66"/>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="69"/>
         <source>&quot;name_translated&quot; must not be empty. (dtype_toolbar)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="68"/>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="71"/>
         <source>&quot;actions_list&quot; must be a list. (dtype_toolbar)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="70"/>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="73"/>
         <source>Items in &quot;actions_list&quot; must be dicts. (dtype_toolbar)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="72"/>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="75"/>
         <source>&quot;enabled&quot; must be bool. (dtype_toolbar)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="114"/>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="77"/>
         <source>&quot;iface&quot; must be a QgisInterface object. (dtype_toolbar)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -173,162 +173,82 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="57"/>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="58"/>
         <source>&quot;toolbar_list&quot; must be a list. (dtype_fsm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="59"/>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="60"/>
         <source>Items in toolbar_list must be dicts. (dtype_fsm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="142"/>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="62"/>
         <source>&quot;iface&quot; must be a QgisInterface. (dtype_fsm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="63"/>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="64"/>
         <source>&quot;config&quot; must be a &quot;config_class&quot; object or None. (dtype_fsm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="76"/>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="77"/>
         <source>&quot;name&quot; must be str. (dtype_fsm item)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="78"/>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="79"/>
         <source>&quot;name&quot; is not a known toolbar. (dtype_fsm item)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="89"/>
-        <source>&quot;name&quot; must be str. (dtype_fsm new)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="94"/>
-        <source>&quot;name&quot; is a known toolbar, i.e. already exists. (dtype_fsm new)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="96"/>
-        <source>&quot;name&quot; is empty. (dtype_fsm new)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="105"/>
-        <source>&quot;name&quot; must be str. (dtype_fsm delete)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="110"/>
-        <source>&quot;name&quot; is not a known toolbar. (dtype_fsm delete)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="119"/>
-        <source>&quot;old_name&quot; must be str. (dtype_fsm rename)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="121"/>
-        <source>&quot;new_name&quot; must be str. (dtype_fsm rename)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="125"/>
-        <source>&quot;old_name&quot; is not a known toolbar. (dtype_fsm rename)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="127"/>
-        <source>&quot;new_name&quot; is a known toolbar, i.e. already exists. (dtype_fsm rename)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="129"/>
-        <source>&quot;new_name&quot; is empty. (dtype_fsm rename)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="140"/>
-        <source>&quot;name&quot; must be str. (dtype_fsm save)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="63"/>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="62"/>
         <source>&quot;name_internal&quot; must be a str. (dtype_action)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="65"/>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="64"/>
         <source>&quot;name_translated&quot; must be a str. (dtype_action)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="67"/>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="66"/>
         <source>&quot;parent_name_internal&quot; must be a str. (dtype_action)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="85"/>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="157"/>
         <source>Action could not be found. (dtype_action find)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="87"/>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="170"/>
         <source>Confused, multiple matching actions. (dtype_action find)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="93"/>
-        <source>&quot;all_actions&quot; must be a list. (dtype_action find)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="95"/>
-        <source>Items in &quot;all_actions&quot; must be dicts. (dtype_action find)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="111"/>
-        <source>Action could not be found. (dtype_action  find)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="146"/>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="218"/>
         <source>&quot;action&quot; must not be changed. (dtype_action action)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="156"/>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="238"/>
         <source>&quot;name_internal&quot; must not be changed. (dtype_action name_internal)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="166"/>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="248"/>
         <source>&quot;name_translated&quot; must not be changed. (dtype_action name_translated)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="176"/>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="258"/>
         <source>&quot;parent_name_internal&quot; must not be changed. (dtype_action parent_name_internal)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="196"/>
-        <source>&quot;name_internal&quot; and &quot;name_translated&quot; are empty. (dtype_action _dict_from_action)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="207"/>
-        <source>&quot;mainwindow&quot; must be a QGis mainwindow. (dtype_action get_all_actions)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qgist/toolbargenerator/dtype_action.py" line="218"/>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="340"/>
         <source>&quot;action&quot; must be a QAction. (dtype_action from_action)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -343,7 +263,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
+        <location filename="../qgist/toolbargenerator/ui_manager.py" line="175"/>
         <source>New toolbar</source>
         <translation type="unfinished"></translation>
     </message>
@@ -388,28 +308,238 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/ui_manager.py" line="72"/>
+        <location filename="../qgist/toolbargenerator/ui_manager.py" line="79"/>
         <source>&quot;plugin_root_fld&quot; must be str. (ui_manager)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/ui_manager.py" line="74"/>
+        <location filename="../qgist/toolbargenerator/ui_manager.py" line="81"/>
         <source>&quot;plugin_root_fld&quot; must exists. (ui_manager)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/ui_manager.py" line="76"/>
+        <location filename="../qgist/toolbargenerator/ui_manager.py" line="83"/>
         <source>&quot;plugin_root_fld&quot; must be a directory. (ui_manager)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/ui_manager.py" line="78"/>
+        <location filename="../qgist/toolbargenerator/ui_manager.py" line="85"/>
         <source>&quot;iface&quot; must be a QgisInterface. (ui_manager)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qgist/toolbargenerator/ui_manager.py" line="80"/>
+        <location filename="../qgist/toolbargenerator/ui_manager.py" line="87"/>
         <source>&quot;fsm&quot; must be a toolbar generator finite state machine. (ui_manager)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="92"/>
+        <source>&quot;iface&quot; must be a QgisInterface object. (dtype_toolbar load)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="106"/>
+        <source>&quot;iface&quot; must be a QgisInterface object. (dtype_toolbar reload)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="117"/>
+        <source>&quot;iface&quot; must be a QgisInterface object. (dtype_toolbar unload)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="137"/>
+        <source>&quot;action_id_list&quot; must be a list. (dtype_toolbar update_actions)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="139"/>
+        <source>Items in &quot;action_id_list&quot; must be str. (dtype_toolbar update_actions)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="141"/>
+        <source>&quot;iface&quot; must be a QgisInterface object. (dtype_toolbar update_actions)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="146"/>
+        <source>&quot;action_id_list&quot; contains unknown action ids. (dtype_toolbar update_actions)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="189"/>
+        <source>&quot;name_internal&quot; must not be changed. (dtype_toolbar name_internal)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="199"/>
+        <source>&quot;name_translated&quot; must not be changed. (dtype_toolbar name_translated)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="204"/>
+        <source>custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="90"/>
+        <source>&quot;name_translated&quot; must be str. (dtype_fsm new)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="92"/>
+        <source>&quot;iface&quot; must be a QgisInterface. (dtype_fsm new)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="95"/>
+        <source>&quot;name_translated&quot; is a known toolbar, i.e. already exists. (dtype_fsm new)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="97"/>
+        <source>&quot;name_translated&quot; is empty. (dtype_fsm new)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="101"/>
+        <source>&quot;name_translated&quot; is translates to a known toolbar, i.e. already exists. (dtype_fsm new)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="116"/>
+        <source>&quot;name_translated&quot; must be str. (dtype_fsm delete)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="118"/>
+        <source>&quot;iface&quot; must be a QgisInterface. (dtype_fsm delete)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="121"/>
+        <source>&quot;name_translated&quot; is not a known toolbar. (dtype_fsm delete)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="130"/>
+        <source>&quot;old_name_translated&quot; must be str. (dtype_fsm rename)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="132"/>
+        <source>&quot;new_name_translated&quot; must be str. (dtype_fsm rename)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="134"/>
+        <source>&quot;iface&quot; must be a QgisInterface. (dtype_fsm rename)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="136"/>
+        <source>&quot;old_name_translated&quot; is not a known toolbar. (dtype_fsm rename)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="138"/>
+        <source>&quot;new_name_translated&quot; is a known toolbar, i.e. already exists. (dtype_fsm rename)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="140"/>
+        <source>&quot;new_name_translated&quot; is empty. (dtype_fsm rename)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="146"/>
+        <source>&quot;new_name_translated&quot; is translates to a known toolbar, i.e. already exists. (dtype_fsm rename)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="155"/>
+        <source>&quot;name_translated&quot; must be str. (dtype_fsm save)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="157"/>
+        <source>&quot;iface&quot; must be a QgisInterface. (dtype_fsm save)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="159"/>
+        <source>&quot;name_list&quot; must be a list. (dtype_fsm save)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="161"/>
+        <source>Items in &quot;name_list&quot; must be str. (dtype_fsm save)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="68"/>
+        <source>&quot;action&quot; must be a QAction or None. (dtype_action)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="184"/>
+        <source>Confused, something odd happened. (dtype_action find)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="196"/>
+        <source>[unnamed]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="228"/>
+        <source>&quot;id&quot; must not be changed. (dtype_action id)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="268"/>
+        <source>&quot;present&quot; must not be changed. (dtype_action present)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="282"/>
+        <source>&quot;mainwindow&quot; must be a QGis mainwindow. (dtype_action all_from_mainwindow)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="292"/>
+        <source>&quot;mainwindow&quot; must be a QGis mainwindow. (dtype_action all_named_from_mainwindow_as_dict)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="304"/>
+        <source>&quot;action_list&quot; must be a list. (dtype_action filter_unnamed)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="306"/>
+        <source>Items in &quot;action_list&quot; must be of type dtype_action_class. (dtype_action filter_unnamed)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="322"/>
+        <source>&quot;action_list&quot; must be a list. (dtype_action find_in_list)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="324"/>
+        <source>Items in &quot;action_list&quot; must be of type dtype_action_class. (dtype_action find_in_list)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/dtype_action.py" line="326"/>
+        <source>&quot;mainwindow&quot; must be a QGis mainwindow. (dtype_action find_in_list)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qgist/toolbargenerator/ui_manager.py" line="175"/>
+        <source>Name of new toolbar</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
