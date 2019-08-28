@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0">
+<!DOCTYPE TS>
+<TS version="2.1" language="de_DE">
 <context>
     <name>global</name>
     <message>
@@ -75,12 +76,12 @@
     <message>
         <location filename="../qgist/msg.py" line="49"/>
         <source>Critical error</source>
-        <translation type="unfinished"></translation>
+        <translation>Kritischer Fehler</translation>
     </message>
     <message>
         <location filename="../qgist/msg.py" line="53"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung</translation>
     </message>
     <message>
         <location filename="../qgist/msg.py" line="58"/>
@@ -160,17 +161,17 @@
     <message>
         <location filename="../qgist/toolbargenerator/core.py" line="112"/>
         <source>&amp;Toolbar Generator Management</source>
-        <translation type="unfinished"></translation>
+        <translation>Generator für &amp;Werkzeugleisten</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/core.py" line="119"/>
         <source>Qgist &amp;Toolbar Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Qgist Generator für &amp;Werkzeugleisten</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/core.py" line="125"/>
         <source>Qgist Toolbar Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Generator für Werkzeugleisten</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="58"/>
@@ -255,57 +256,57 @@
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="76"/>
         <source>Toolbar Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Manager für &amp;Werkzeugleisten</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeugleisten</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager.py" line="175"/>
         <source>New toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Werkzeugleiste</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
         <source>Delete toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeugleiste löschen</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
         <source>Save toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeugleiste speichern</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
         <source>Selected actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählte Aktionen</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
         <source>Move action up</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktion aufwärts bewegen</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
         <source>Move action down</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktion abwärts bewegen</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
         <source>Remove action</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktion entfernen</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
         <source>Available actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Verfügbare Aktionen</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
         <source>Add action</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktion hinzufügen</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager.py" line="79"/>
@@ -380,7 +381,7 @@
     <message>
         <location filename="../qgist/toolbargenerator/dtype_toolbar.py" line="204"/>
         <source>custom</source>
-        <translation type="unfinished"></translation>
+        <translation>angepasst</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="90"/>
@@ -490,7 +491,7 @@
     <message>
         <location filename="../qgist/toolbargenerator/dtype_action.py" line="196"/>
         <source>[unnamed]</source>
-        <translation type="unfinished"></translation>
+        <translation>[unbenannt]</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/dtype_action.py" line="228"/>
@@ -540,7 +541,7 @@
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager.py" line="175"/>
         <source>Name of new toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Name der neuen Werkzeugleiste</translation>
     </message>
 </context>
 </TS>
