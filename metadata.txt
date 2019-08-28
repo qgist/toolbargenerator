@@ -19,7 +19,7 @@
 ; </LICENSE_BLOCK>
 
 [general]
-name=QGIST Toolbar Generator RE
+name=QGIST Toolbar Generator
 description=Generating Toolbars
 version=0.0.1
 qgisMinimumVersion=3.0
