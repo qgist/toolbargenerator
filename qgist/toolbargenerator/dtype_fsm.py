@@ -120,7 +120,8 @@ class dtype_fsm_class:
         if name_translated not in self._toolbar_dict.keys():
             raise QgistValueError(translate('global', '"name_translated" is not a known toolbar. (dtype_fsm delete)'))
 
-        self._toolbar_dict.pop(name_translated)
+        deleted_toolbar = self._toolbar_dict.pop(name_translated)
+        deleted_toolbar.unload(iface)
 
         self._update_config()
 
