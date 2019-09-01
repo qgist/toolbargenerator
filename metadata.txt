@@ -21,6 +21,7 @@
 [general]
 name=QGIST Toolbar Generator
 description=Generating Toolbars
+about=QGIST Toolbar Generator is a QGIS plugin for generating toolbars.
 version=0.0.1
 qgisMinimumVersion=3.0
 author=QGIST project
