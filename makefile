@@ -18,13 +18,17 @@
 # specific language governing rights and limitations under the License.
 # </LICENSE_BLOCK>
 
+
+plugin = toolbargenerator
+
 release:
 	make clean
-	zip -r toolbargenerator.zip *
-	gpg --detach-sign -a toolbargenerator.zip
+	mkdir -p release/$(plugin)
+	cp --parents -a $$(git ls-tree -r $$(git rev-parse --abbrev-ref HEAD) --name-only) release/$(plugin)/
+	cd release/; zip -r $(plugin).zip $(plugin); gpg --detach-sign -a $(plugin).zip
 
 clean:
-	-rm toolbargenerator.zip*
+	-rm -r release
 	find qgist/ -name '*.pyc' -exec rm -f {} +
 	find qgist/ -name '*.pyo' -exec rm -f {} +
 	find qgist/ -name '*~' -exec rm -f {} +
