@@ -142,11 +142,17 @@ class dtype_fsm_class:
         if old_name_translated == new_name_translated:
             return
 
+        old_name_internal = dtype_toolbar_class.translated_to_internal_name(old_name_translated)
+        if old_name_internal not in {item['name_internal'] for item in self._toolbar_dict.values()}:
+            raise QgistToolbarNameError(translate('global', '"old_name_translated" is not translated to a known toolbar, i.e. does not exist. (dtype_fsm rename)'))
+
         new_name_internal = dtype_toolbar_class.translated_to_internal_name(new_name_translated)
         if new_name_internal in {item['name_internal'] for item in self._toolbar_dict.values()}:
-            raise QgistToolbarNameError(translate('global', '"new_name_translated" is translates to a known toolbar, i.e. already exists. (dtype_fsm rename)'))
+            raise QgistToolbarNameError(translate('global', '"new_name_translated" is translated to a known toolbar, i.e. already exists. (dtype_fsm rename)'))
 
-        # TODO
+        self._toolbar_dict[old_name_translated].name_internal = new_name_internal
+        self._toolbar_dict[old_name_translated].name_translated = new_name_translated
+        self._toolbar_dict[new_name_translated] = self._toolbar_dict.pop(old_name_translated)
 
         self._update_config()
 
