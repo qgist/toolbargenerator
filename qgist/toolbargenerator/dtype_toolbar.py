@@ -186,7 +186,12 @@ class dtype_toolbar_class:
     @name_internal.setter
     def name_internal(self, value):
 
-        raise QgistAttributeError(translate('global', '"name_internal" must not be changed. (dtype_toolbar name_internal)'))
+        if not isinstance(value, str):
+            raise QgistTypeError(translate('global', '"value" must be str. (dtype_toolbar name_internal)'))
+        if len(value) == 0:
+            raise QgistValueError(translate('global', '"value" must not be empty. (dtype_toolbar name_internal)'))
+
+        self._name_internal = value
 
     @property
     def name_translated(self):
@@ -196,7 +201,12 @@ class dtype_toolbar_class:
     @name_translated.setter
     def name_translated(self, value):
 
-        raise QgistAttributeError(translate('global', '"name_translated" must not be changed. (dtype_toolbar name_translated)'))
+        if not isinstance(value, str):
+            raise QgistTypeError(translate('global', '"value" must be str. (dtype_toolbar name_translated)'))
+        if len(value) == 0:
+            raise QgistValueError(translate('global', '"value" must not be empty. (dtype_toolbar name_translated)'))
+
+        self._name_translated = value
 
     @staticmethod
     def translated_to_internal_name(name_translated):

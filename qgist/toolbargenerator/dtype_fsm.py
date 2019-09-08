@@ -98,7 +98,7 @@ class dtype_fsm_class:
 
         name_internal = dtype_toolbar_class.translated_to_internal_name(name_translated)
         if name_internal in {item.name_internal for item in self._toolbar_dict.values()}:
-            raise QgistToolbarNameError(translate('global', '"name_translated" is translates to a known toolbar, i.e. already exists. (dtype_fsm new)'))
+            raise QgistToolbarNameError(translate('global', '"name_translated" is translated to a known toolbar, i.e. already exists. (dtype_fsm new)'))
 
         self._toolbar_dict[name_translated] = dtype_toolbar_class(
             name_internal = name_internal,
