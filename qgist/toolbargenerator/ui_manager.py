@@ -103,7 +103,9 @@ class ui_manager_class(ui_manager_base_class):
 
         self._all_items_dict = {}
 
-        all_actions_dict = dtype_action_class.all_named_from_mainwindow_as_dict(self._iface.mainWindow())
+        all_actions_dict = dtype_action_class.all_named_from_mainwindow_as_dict(
+            self._iface.mainWindow(), with_separator = False
+            )
         for action_id in sorted(all_actions_dict.keys()):
             self._all_items_dict[action_id] = self._item_from_action(all_actions_dict[action_id])
             self._ui_dict['list_actions_all'].addItem(self._all_items_dict[action_id])

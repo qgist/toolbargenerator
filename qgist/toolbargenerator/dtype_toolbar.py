@@ -42,7 +42,11 @@ from qgis._gui import QgisInterface
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-from .dtype_action import dtype_action_class
+from .const import SEPARATOR
+from .dtype_action import (
+    dtype_action_class,
+    dtype_separator_class,
+    )
 from ..error import (
     QgistAttributeError,
     QgistTypeError,
@@ -78,7 +82,7 @@ class dtype_toolbar_class:
 
         self._name_internal = name_internal
         self._name_translated = name_translated
-        self._actions_list = [dtype_action_class(**item) for item in actions_list]
+        self._actions_list = [dtype_action_class.from_dict(item) for item in actions_list]
         self._enabled = enabled
 
         self._loaded = False
@@ -190,8 +194,7 @@ class dtype_toolbar_class:
         dtype_action_class.find_in_list(self._actions_list, iface.mainWindow())
 
         for action in self._actions_list:
-            if action.present:
-                self._toolbar.addAction(action.action)
+            action.add_to_toolbar(self._toolbar)
 
     def as_dict(self):
 
