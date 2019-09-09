@@ -125,6 +125,29 @@ class dtype_toolbar_class:
 
         self._loaded = False
 
+    def rename(self, new_name_internal, new_name_translated, iface):
+
+        if not isinstance(new_name_internal, str):
+            raise QgistTypeError(translate('global', '"new_name_internal" must be str. (dtype_toolbar rename)'))
+        if len(new_name_internal) == 0:
+            raise QgistValueError(translate('global', '"new_name_internal" must not be empty. (dtype_toolbar rename)'))
+        if not isinstance(new_name_translated, str):
+            raise QgistTypeError(translate('global', '"new_name_translated" must be str. (dtype_toolbar rename)'))
+        if len(new_name_translated) == 0:
+            raise QgistValueError(translate('global', '"new_name_translated" must not be empty. (dtype_toolbar rename)'))
+        if not isinstance(iface, QgisInterface):
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar rename)'))
+
+        self._name_internal = new_name_internal
+        self._name_translated = new_name_translated
+
+        if not self._enabled:
+            return
+
+        # self.reload will not reset toolbar name and object name - a new toolbar is required
+        self.unload(iface)
+        self.load(iface)
+
     def get_actions(self):
 
         return (
@@ -186,12 +209,7 @@ class dtype_toolbar_class:
     @name_internal.setter
     def name_internal(self, value):
 
-        if not isinstance(value, str):
-            raise QgistTypeError(translate('global', '"value" must be str. (dtype_toolbar name_internal)'))
-        if len(value) == 0:
-            raise QgistValueError(translate('global', '"value" must not be empty. (dtype_toolbar name_internal)'))
-
-        self._name_internal = value
+        raise QgistAttributeError(translate('global', '"name_internal" must not be changed. (dtype_toolbar name_internal)'))
 
     @property
     def name_translated(self):
@@ -201,12 +219,7 @@ class dtype_toolbar_class:
     @name_translated.setter
     def name_translated(self, value):
 
-        if not isinstance(value, str):
-            raise QgistTypeError(translate('global', '"value" must be str. (dtype_toolbar name_translated)'))
-        if len(value) == 0:
-            raise QgistValueError(translate('global', '"value" must not be empty. (dtype_toolbar name_translated)'))
-
-        self._name_translated = value
+        raise QgistAttributeError(translate('global', '"name_translated" must not be changed. (dtype_toolbar name_translated)'))
 
     @staticmethod
     def translated_to_internal_name(name_translated):
