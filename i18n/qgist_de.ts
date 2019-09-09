@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="de_DE">
 <context>
     <name>global</name>
     <message>
@@ -690,7 +691,7 @@
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
         <source>Add separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Separator hinzufügen</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/dtype_action.py" line="73"/>
@@ -735,7 +736,7 @@
     <message>
         <location filename="../qgist/toolbargenerator/const.py" line="39"/>
         <source>separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Separator</translation>
     </message>
 </context>
 </TS>
