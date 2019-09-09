@@ -46,6 +46,7 @@ from PyQt5.QtGui import (
     QIcon,
     )
 from PyQt5.QtWidgets import (
+    QFileDialog,
     QInputDialog,
     QListWidgetItem,
     )
@@ -59,7 +60,11 @@ from .dtype_action import dtype_action_class
 from .dtype_fsm import dtype_fsm_class
 from .error import QgistToolbarNameError
 from .ui_manager_base import ui_manager_base_class
-from ..error import Qgist_ALL_Errors
+from ..config import config_class
+from ..error import (
+    QgistConfigFormatError,
+    Qgist_ALL_Errors,
+    )
 from ..msg import (
     msg_critical,
     msg_warning,
@@ -106,7 +111,7 @@ class ui_manager_class(ui_manager_base_class):
 
         self._ui_dict['text_filter'].textChanged.connect(self._text_filter_textchanged)
 
-        for name in ('add', 'remove', 'up', 'down', 'new', 'delete', 'save', 'rename'):
+        for name in ('add', 'remove', 'up', 'down', 'new', 'delete', 'save', 'rename', 'import', 'export'):
             self._ui_dict['toolbutton_%s' % name].clicked.connect(
                 getattr(self, '_toolbutton_%s_clicked' % name)
                 )
@@ -247,6 +252,53 @@ class ui_manager_class(ui_manager_base_class):
         except QgistToolbarNameError as e:
             msg_warning(e, self)
             return
+        except Qgist_ALL_Errors as e:
+            msg_critical(e, self)
+            self.reject()
+            return
+
+    def _toolbutton_import_clicked(self):
+
+        fn, user_ok = QFileDialog.getOpenFileName(
+            self,
+            translate('global', 'Import toolbar from file'),
+            '',
+            'JSON files (*.json);;All Files (*)',
+            options = QFileDialog.Options(),
+            )
+        if not user_ok:
+            return
+
+        try:
+            self._fsm.import_toolbar(config_class.import_config(fn), self._iface)
+            self._update_view()
+        except (QgistToolbarNameError, QgistConfigFormatError) as e:
+            msg_warning(e, self)
+            return
+        except Qgist_ALL_Errors as e:
+            msg_critical(e, self)
+            self.reject()
+            return
+
+    def _toolbutton_export_clicked(self):
+
+        current_item = self._ui_dict['list_toolbars'].currentItem()
+        if current_item is None:
+            return
+        name_translated = str(current_item.text())
+
+        fn, user_ok = QFileDialog.getSaveFileName(
+            self,
+            translate('global', 'Export toolbar to file'),
+            '',
+            'JSON files (*.json);;All Files (*)',
+            options = QFileDialog.Options(),
+            )
+        if not user_ok:
+            return
+
+        try:
+            config_class.export_config(fn, self._fsm.export_toolbar(name_translated))
         except Qgist_ALL_Errors as e:
             msg_critical(e, self)
             self.reject()

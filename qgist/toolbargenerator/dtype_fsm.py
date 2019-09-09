@@ -188,9 +188,9 @@ class dtype_fsm_class:
         name_translated = toolbar_dict['name_translated']
 
         if name_translated in self._toolbar_dict.keys():
-            raise QgistWorkbenchNameError(translate('global', '"name_translated" is a known toolbar, i.e. already exists. (dtype_fsm import)'))
+            raise QgistToolbarNameError(translate('global', '"name_translated" is a known toolbar, i.e. already exists. (dtype_fsm import)'))
         if len(name_translated) == 0:
-            raise QgistWorkbenchNameError(translate('global', '"name_translated" is empty. (dtype_fsm import)'))
+            raise QgistToolbarNameError(translate('global', '"name_translated" is empty. (dtype_fsm import)'))
 
         self._toolbar_dict[name_translated] = dtype_toolbar_class(iface = iface, **toolbar_dict)
 
