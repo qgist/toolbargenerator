@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="de_DE">
 <context>
     <name>global</name>
     <message>
@@ -605,17 +606,17 @@
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager.py" line="239"/>
         <source>Rename toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeugleiste umbenennen</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
         <source>Import toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeugleiste importieren</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager_base.py" line="85"/>
         <source>Export toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeugleiste exportieren</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/dtype_fsm.py" line="101"/>
@@ -675,17 +676,17 @@
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager.py" line="239"/>
         <source>New name for toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuer Name für Werkzeugleiste</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager.py" line="262"/>
         <source>Import toolbar from file</source>
-        <translation type="unfinished"></translation>
+        <translation>Importiere Werkzeugleiste aus Datei</translation>
     </message>
     <message>
         <location filename="../qgist/toolbargenerator/ui_manager.py" line="290"/>
         <source>Export toolbar to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportiere Werkzeugleiste in Datei</translation>
     </message>
 </context>
 </TS>
