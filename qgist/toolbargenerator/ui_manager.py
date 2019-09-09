@@ -56,7 +56,10 @@ from PyQt5.QtWidgets import (
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-from .dtype_action import dtype_action_class
+from .dtype_action import (
+    dtype_action_class,
+    dtype_separator_class,
+    )
 from .dtype_fsm import dtype_fsm_class
 from .error import QgistToolbarNameError
 from .ui_manager_base import ui_manager_base_class
@@ -113,7 +116,7 @@ class ui_manager_class(ui_manager_base_class):
 
         self._ui_dict['text_filter'].textChanged.connect(self._text_filter_textchanged)
 
-        for name in ('add', 'remove', 'up', 'down', 'new', 'delete', 'save', 'rename', 'import', 'export'):
+        for name in ('add', 'remove', 'up', 'down', 'new', 'delete', 'save', 'rename', 'import', 'export', 'separator'):
             self._ui_dict['toolbutton_%s' % name].clicked.connect(
                 getattr(self, '_toolbutton_%s_clicked' % name)
                 )
@@ -305,6 +308,12 @@ class ui_manager_class(ui_manager_base_class):
             msg_critical(e, self)
             self.reject()
             return
+
+    def _toolbutton_separator_clicked(self):
+
+        self._ui_dict['list_actions_toolbar'].addItem(
+            QListWidgetItem(self._item_from_action(dtype_separator_class()))
+            )
 
     def _get_selected_actions(self):
 
