@@ -1,6 +1,6 @@
 # Changes
 
-## 0.0.2 (2019-XX-XX)
+## 0.0.2 (2019-09-09)
 
 * Implemented #1: Toolbars can be renamed.
 * Implemented #2: Toolbars can be imported and exported.
