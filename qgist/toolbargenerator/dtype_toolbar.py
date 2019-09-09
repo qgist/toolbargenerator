@@ -120,6 +120,7 @@ class dtype_toolbar_class:
             return
 
         self._toolbar_clear()
+        iface.mainWindow().removeToolBar(self._toolbar) # fixes #4
         del self._toolbar # explicit ...
         self._toolbar = None
 
