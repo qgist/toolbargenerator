@@ -31,6 +31,7 @@ specific language governing rights and limitations under the License.
 from PyQt5.QtWidgets import (
     QAction,
     QMainWindow,
+    QToolBar,
     )
 
 
@@ -38,6 +39,7 @@ from PyQt5.QtWidgets import (
 # IMPORT (Internal)
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+from .const import SEPARATOR
 from .error import (
     QgistActionConfusionError,
     QgistActionNotFoundError,
@@ -45,13 +47,14 @@ from .error import (
 from ..error import (
     QgistAttributeError,
     QgistTypeError,
+    QgistValueError,
     )
 from ..msg import msg_warning
 from ..util import translate
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# CLASS
+# CLASS: ACTION
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 class dtype_action_class:
@@ -66,6 +69,8 @@ class dtype_action_class:
             raise QgistTypeError(translate('global', '"parent_name_internal" must be a str. (dtype_action)'))
         if not isinstance(action, QAction) and action is not None:
             raise QgistTypeError(translate('global', '"action" must be a QAction or None. (dtype_action)'))
+        if name_internal == '' and name_translated == SEPARATOR and parent_name_internal == '':
+            raise QgistValueError(translate('global', 'Names suggest that this is a separator, not an action. (dtype_action)'))
 
         self._name_internal = name_internal
         self._name_translated = name_translated
@@ -81,6 +86,9 @@ class dtype_action_class:
         self._create_id()
 
     def __eq__(self, other_action):
+
+        if not isinstance(other_action, dtype_action_class):
+            raise QgistTypeError(translate('global', '"other_action" must be of type dtype_action. (dtype_action eq)'))
 
         if all([
             len(self.name_translated) > 0,
@@ -143,7 +151,20 @@ class dtype_action_class:
 
         return 0
 
+    def add_to_toolbar(self, toolbar):
+
+        if not isinstance(toolbar, QToolBar):
+            raise QgistTypeError(translate('global', '"toolbar" must be a QToolBar. (dtype_action add_to_toolbar)'))
+
+        if self._present:
+            toolbar.addAction(self._action)
+
     def find(self, all_actions):
+
+        if not isinstance(all_actions, list):
+            raise QgistTypeError(translate('global', '"all_actions" must be a list. (dtype_action find)'))
+        if not all([isinstance(item, dtype_action_class) for item in all_actions]):
+            raise QgistTypeError(translate('global', 'Items in "all_actions" must be of type dtype_action. (dtype_action find)'))
 
         self._action, self._present = None, False
 
@@ -286,16 +307,24 @@ class dtype_action_class:
             ]
 
     @staticmethod
-    def all_named_from_mainwindow_as_dict(mainwindow):
+    def all_named_from_mainwindow_as_dict(mainwindow, with_separator = True):
 
         if not isinstance(mainwindow, QMainWindow):
             raise QgistTypeError(translate('global', '"mainwindow" must be a QGis mainwindow. (dtype_action all_named_from_mainwindow_as_dict)'))
+        if not isinstance(with_separator, bool):
+            raise QgistTypeError(translate('global', '"with_separator" must be a bool. (dtype_action all_named_from_mainwindow_as_dict)'))
 
         named_actions, _ = dtype_action_class.filter_unnamed(
             dtype_action_class.all_from_mainwindow(mainwindow)
             )
 
-        return {action.id: action for action in named_actions}
+        mainwindow_actions = {action.id: action for action in named_actions}
+
+        if with_separator:
+            sep = dtype_separator_class()
+            mainwindow_actions[sep.id] = sep
+
+        return mainwindow_actions
 
     @staticmethod
     def filter_unnamed(action_list):
@@ -345,3 +374,46 @@ class dtype_action_class:
             parent_name_internal = str(action.parent().objectName()),
             action = action,
             )
+
+    @staticmethod
+    def from_dict(action_dict):
+
+        if not isinstance(action_dict, dict):
+            raise QgistTypeError(translate('global', '"action_dict" must be a dict. (dtype_action from_dict)'))
+
+        if all([
+            action_dict['name_internal'] == '',
+            action_dict['name_translated'] == SEPARATOR,
+            action_dict['parent_name_internal'] == '',
+            ]):
+            return dtype_separator_class(**action_dict)
+        else:
+            return dtype_action_class(**action_dict)
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# CLASS: SEPARATOR
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class dtype_separator_class(dtype_action_class):
+
+    def __init__(self, *args, **kwargs):
+
+        self._name_internal = ''
+        self._name_translated = SEPARATOR
+        self._id = SEPARATOR
+        self._parent_name_internal = ''
+        self._present = False
+        self._action = None
+
+    def add_to_toolbar(self, toolbar):
+
+        if not isinstance(toolbar, QToolBar):
+            raise QgistTypeError(translate('global', '"toolbar" must be a QToolBar. (dtype_separator add_to_toolbar)'))
+
+        toolbar.addSeparator()
+
+    def find(self, all_actions):
+        pass
+
+    def disconnect(self):
+        pass
