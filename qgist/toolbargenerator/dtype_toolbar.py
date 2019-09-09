@@ -125,6 +125,29 @@ class dtype_toolbar_class:
 
         self._loaded = False
 
+    def rename(self, new_name_internal, new_name_translated, iface):
+
+        if not isinstance(new_name_internal, str):
+            raise QgistTypeError(translate('global', '"new_name_internal" must be str. (dtype_toolbar rename)'))
+        if len(new_name_internal) == 0:
+            raise QgistValueError(translate('global', '"new_name_internal" must not be empty. (dtype_toolbar rename)'))
+        if not isinstance(new_name_translated, str):
+            raise QgistTypeError(translate('global', '"new_name_translated" must be str. (dtype_toolbar rename)'))
+        if len(new_name_translated) == 0:
+            raise QgistValueError(translate('global', '"new_name_translated" must not be empty. (dtype_toolbar rename)'))
+        if not isinstance(iface, QgisInterface):
+            raise QgistTypeError(translate('global', '"iface" must be a QgisInterface object. (dtype_toolbar rename)'))
+
+        self._name_internal = new_name_internal
+        self._name_translated = new_name_translated
+
+        if not self._enabled:
+            return
+
+        # self.reload will not reset toolbar name and object name - a new toolbar is required
+        self.unload(iface)
+        self.load(iface)
+
     def get_actions(self):
 
         return (
