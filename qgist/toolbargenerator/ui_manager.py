@@ -106,7 +106,7 @@ class ui_manager_class(ui_manager_base_class):
 
         self._ui_dict['text_filter'].textChanged.connect(self._text_filter_textchanged)
 
-        for name in ('add', 'remove', 'up', 'down', 'new', 'delete', 'save'):
+        for name in ('add', 'remove', 'up', 'down', 'new', 'delete', 'save', 'rename'):
             self._ui_dict['toolbutton_%s' % name].clicked.connect(
                 getattr(self, '_toolbutton_%s_clicked' % name)
                 )
@@ -219,6 +219,34 @@ class ui_manager_class(ui_manager_base_class):
             self._fsm.save_toolbar(name_translated, self._iface, self._get_selected_actions())
             self._update_view()
             self._select_toolbar(name_translated)
+        except Qgist_ALL_Errors as e:
+            msg_critical(e, self)
+            self.reject()
+            return
+
+    def _toolbutton_rename_clicked(self):
+
+        current_item = self._ui_dict['list_toolbars'].currentItem()
+        if current_item is None:
+            return
+        old_name_translated = str(current_item.text())
+
+        new_name_translated, user_ok = QInputDialog.getText(
+            self,
+            translate('global', 'Rename toolbar'),
+            translate('global', 'New name for toolbar')
+            )
+
+        if not user_ok:
+            return
+
+        try:
+            self._fsm.rename_toolbar(old_name_translated, new_name_translated, self._iface)
+            self._update_view()
+            self._select_toolbar(new_name_translated)
+        except QgistToolbarNameError as e:
+            msg_warning(e, self)
+            return
         except Qgist_ALL_Errors as e:
             msg_critical(e, self)
             self.reject()

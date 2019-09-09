@@ -87,6 +87,7 @@ class ui_manager_base_class(QDialog):
                 ('new', translate('global', 'New toolbar'), 'FileNew.svg'),
                 ('delete', translate('global', 'Delete toolbar'), 'Delete.svg'),
                 ('save', translate('global', 'Save toolbar'), 'Save.svg'),
+                ('rename', translate('global', 'Rename toolbar'), 'Rename.svg'),
                 )),
             ('center', 'actions_toolbar', translate('global', 'Selected actions'), (
                 ('up', translate('global', 'Move action up'), 'ActionUp.svg'),
