@@ -31,6 +31,7 @@ specific language governing rights and limitations under the License.
 from PyQt5.QtWidgets import (
     QAction,
     QMainWindow,
+    QListWidgetItem,
     QToolBar,
     )
 
@@ -295,6 +296,14 @@ class dtype_action_class:
             name_translated = self._name_translated,
             parent_name_internal = self._parent_name_internal,
             )
+
+    def as_listwidgetitem(self):
+
+        item = QListWidgetItem(self._id)
+        if self._present:
+            item.setIcon(self._action.icon())
+
+        return item
 
     @staticmethod
     def all_from_mainwindow(mainwindow):

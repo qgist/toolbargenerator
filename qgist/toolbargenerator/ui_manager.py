@@ -110,7 +110,7 @@ class ui_manager_class(ui_manager_base_class):
             self._iface.mainWindow(), with_separator = False
             )
         for action_id in sorted(all_actions_dict.keys()):
-            self._all_items_dict[action_id] = self._item_from_action(all_actions_dict[action_id])
+            self._all_items_dict[action_id] = all_actions_dict[action_id].as_listwidgetitem()
             self._ui_dict['list_actions_all'].addItem(self._all_items_dict[action_id])
         self._ui_dict['list_actions_all'].setCurrentRow(0)
 
@@ -123,14 +123,6 @@ class ui_manager_class(ui_manager_base_class):
         self._ui_dict['list_toolbars'].currentRowChanged.connect(self._list_toolbars_currentrowchanged)
 
         self._update_view()
-
-    def _item_from_action(self, action):
-
-        item = QListWidgetItem(action.id)
-        if action.action is not None:
-            item.setIcon(action.action.icon())
-
-        return item
 
     def _item_from_item(self, old_item):
 
@@ -311,9 +303,7 @@ class ui_manager_class(ui_manager_base_class):
 
     def _toolbutton_separator_clicked(self):
 
-        self._ui_dict['list_actions_toolbar'].addItem(
-            QListWidgetItem(self._item_from_action(dtype_separator_class()))
-            )
+        self._ui_dict['list_actions_toolbar'].addItem(dtype_separator_class().as_listwidgetitem())
 
     def _get_selected_actions(self):
 
@@ -332,7 +322,7 @@ class ui_manager_class(ui_manager_base_class):
         name_translated = str(current_item.text())
 
         for action in self._fsm[name_translated].get_actions():
-            self._ui_dict['list_actions_toolbar'].addItem(self._item_from_action(action))
+            self._ui_dict['list_actions_toolbar'].addItem(action.as_listwidgetitem())
 
     def _select_toolbar(self, name_translated):
 
