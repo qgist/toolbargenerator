@@ -76,13 +76,7 @@ class dtype_action_class:
         self._name_internal = name_internal
         self._name_translated = name_translated
         self._parent_name_internal = parent_name_internal
-
-        if action is None:
-            self._present = False
-            self._action = None
-        else:
-            self._present = True
-            self._action = action
+        self._action = action
 
         self._create_id()
 
@@ -157,7 +151,7 @@ class dtype_action_class:
         if not isinstance(toolbar, QToolBar):
             raise QgistTypeError(translate('global', '"toolbar" must be a QToolBar. (dtype_action add_to_toolbar)'))
 
-        if self._present:
+        if self._action is not None:
             toolbar.addAction(self._action)
 
     def find(self, all_actions):
@@ -167,7 +161,7 @@ class dtype_action_class:
         if not all([isinstance(item, dtype_action_class) for item in all_actions]):
             raise QgistTypeError(translate('global', 'Items in "all_actions" must be of type dtype_action. (dtype_action find)'))
 
-        self._action, self._present = None, False
+        self._action = None
 
         rank_list = [
             (rank, action) for rank, action in
@@ -200,17 +194,17 @@ class dtype_action_class:
                 except QgistActionConfusionError as e:
                     msg_warning(e)
 
-            self._action, self._present = rank_dict[rank][0].action, True
+            self._action = rank_dict[rank][0].action
             return
 
         raise QgistActionConfusionError(translate('global', 'Confused, something odd happened. (dtype_action find)'))
 
     def disconnect(self):
 
-        if not self._present:
+        if self._action is None:
             return
 
-        self._action, self._present = None, False
+        self._action = None
 
     def _create_id(self):
 
@@ -282,7 +276,7 @@ class dtype_action_class:
     @property
     def present(self):
 
-        return self._present
+        return self._action is not None
 
     @present.setter
     def present(self, value):
@@ -300,7 +294,7 @@ class dtype_action_class:
     def as_listwidgetitem(self):
 
         item = QListWidgetItem(self._id)
-        if self._present:
+        if self._action is not None:
             item.setIcon(self._action.icon())
 
         return item
@@ -411,7 +405,6 @@ class dtype_separator_class(dtype_action_class):
         self._name_translated = SEPARATOR
         self._id = SEPARATOR
         self._parent_name_internal = ''
-        self._present = False
         self._action = None
 
     def add_to_toolbar(self, toolbar):
