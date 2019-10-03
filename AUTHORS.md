@@ -6,7 +6,7 @@ Core developers, in alphabetical order:
 - Maria Müller <maria.georgia.mueller@gmail.com>
 - Friedrich Prinz <prinz@pleiszenburg.de>
 
-# QGIST Work Bench
+# QGIST Toolbar Generator
 
 Contributors, in alphabetical order:
 
